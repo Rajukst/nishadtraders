@@ -1,38 +1,572 @@
-.App {
+*{
+  margin:0;
+  padding:0;
+  text-decoration: none;
+}
+/* Login and Registration Page CSS Start */
+section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background: url(../src/asset/bc.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  animation: animateBg 5s linear infinite;
+  
+}
+@keyframes animateBg {
+  100%{
+    filter: hue-rotate(360deg);
+  }
+}
+.login-box{
+  position: relative;
+  width: 400px;
+  height: 450px;
+  background: transparent;
+  border-radius: 20px;
+  border: 2px solid rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(15px);
+}
+@media (max-width: 360px) {
+.login-box{
+  width: 100%;
+  height: 100vh;
+}
+}
+@media (max-width: 786px) {
+.login-box{
+  width: 100%;
+  height: 100vh;
+}
+}
+.login-txt{
+  font-size: 2em;
+  color: #fff;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
+.input-box{
+  position: relative;
+  width: 310px;
+  margin: 30px 0;
+  border-bottom: 2px solid #fff;
+}
+.input-box label{
+  position: absolute;
+  top: 20%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: #fff;
   pointer-events: none;
+  transition: .5s;
+}
+.input-box input{
+ width: 100%;
+ height: 50px;
+ background: transparent;
+ border: none;
+ outline: none;
+ font-size: 1em;
+ color: #fff;
+ padding: 0 35px 0 5px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.input-box input:focus~label{
+top: -15px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.remember-forgot{
+  margin: -15px 0 15px;
+  font-size: .9em;
+  color: #fff;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-between;
+}
+.remember-forgot label input{
+  margin-right: 3px;
+}
+.remember-forgot a{
+  color: #fff;
+  text-decoration: none;
+}
+.remember-forgot a:hover{
+  text-decoration: underline;
+}
+.submitBTN{
+  width: 100%;
+  height: 40px;
+  background: #fff;
+  outline: none;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #000;
+}
+.register-link{
+  font-size: .9em;
+  color: #fff;
+  text-align: center;
+  margin: 25px 0 10px;
+}
+.register-link p a{
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+.register-link p a:hover{
+ text-decoration: underline;
+}
+.input-box .icon{
+position: absolute;
+right: 8px;
+color: #fff;
+font-size: 1.2em;
+line-height: 57px;
+}
+/* Login and Registration Page CSS End */
+
+/* Sidebar CSS Start */
+.containers{
+  display:flex;
+}
+main{
+  width: 100%;
+  padding: 20px;
+}
+.sidebar{
+  background: #000;
+  color: #fff;
+  height: 100vh;
+  width: 300px;
+  transition: all 0.5s;
+  position: fixed;
+}
+.top_section{
+  display: flex;
+  align-items:center;
+  padding:20px 15px;
+}
+.bars{
+  display: flex;
+  font-size: 25px;
+  margin-left: 50px;
+  cursor: pointer;
+}
+.link{
+  display: flex;
+  color: #fff;
+  padding: 10px 15px;
+  gap: 15px;
+  transition: all 0.5s;
+}
+.link:hover{
+  background:lightskyblue;
+  color: #000;
+  transition: all 0.5s;
+}
+
+.icon, .link_text{
+  font-size: 20px;
+  margin-left: 5px;
+}
+.allLinks *{
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+.allUsLinks{
+  margin-top: 10px !important;
+}
+/*  Sidebar LogOut Button */
+/* CSS */
+.button-34 {
+  background: #5E5DF0;
+  border-radius: 999px;
+  box-shadow: #5E5DF0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
+}
+/* button end */
+.fileName{
+  display: flex;
+}
+.EDIT{
+  background: none;
+  border: none;
+}
+.paymentBTNss{
+  background: none;
+  border: none;
+}
+.fileForm{
+  /* width: 150px !important; */
+  margin-top: 150px;
+ 
+}
+.backlink{
+  text-decoration: none;
+  color: black;
+}
+
+.downloads{
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+
+.userClass{
+  text-align: center;
+  font-weight: 500;
+}
+.wrappingDiv{
+  display: flex;
+}
+.productInput{
+  background: none;
+  height: 40px;
+  width: 90%;
+  border-radius: 3px;
+}
+.title{
+  margin-top: 10px;
+}
+.center {
+  border: 5px solid;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+}
+.productInputs{
+  background: none;
+  height: 40px;
+  width: 100%;
+  border-radius: 3px;
+}
+.productInputBTN{
+  background: none;
+  height: 40px;
+  border-radius: 3px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: 500;
+}
+tr:nth-child(even) {
+  background-color: none;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+/* }
+.usersLink{
+  text-decoration: none;
+  color: black;
+}
+
+
+.nameDiv{
+  padding-right: 30px;
+}
+
+.usersLinks{
+  text-decoration: none;
+  border: 1px dotted black;
+  color: black !important;
+  padding: 4px 20px;
+  font-weight: 600;
+}
+.tempGrid{
+  display: grid!important;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.names{
+  display: flex;
+  align-items: center !important;
+}
+.ptag{
+  padding-top: 25px;
+}
+.tempGrids{
+  display: grid!important;
+  grid-template-columns: 1fr 1fr;
+}
+.namess{
+  display: flex;
+  align-items: center !important;
+}
+.newNames{
+  padding-top: 14px;
+  padding-right: 10px;
+}
+.myClass{
+  margin-right: 10px;
+}
+.formDiv{
+  margin: 10px;
+}
+.selectClass{
+  background: none !important;
+  width: 120px;
+  height: 20px;
+  margin-top: 12px;
+}
+.selectClasss{
+  background: none !important;
+  width: 120px;
+}
+.viewNameDiv{
+  display: flex;
+}
+.myName p{
+  text-decoration: underline dotted;
+}
+.viewNameDivGrid{
+  display: grid!important;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.FlexProfess{
+  display: flex;
+}
+.doottedLine{
+  text-decoration: underline dotted;
+}
+.viewNameDivs{
+  display: grid!important;
+  grid-template-columns: 1fr 1fr;
+} */
+.downloadButton{
+  background: none;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+}
+.DataSearch{
+  display: flex;
+}
+
+.scrollTBL{
+  overflow: scroll;
+}
+.searchInp{
+  background: none;
+  border: 1.5px solid black;
+  width: 400px;
+  border-radius: 3px;
+}
+.paymentBTN{
+  background: none;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+.paymentTBL{
+  overflow: scroll;
+  height: 20vh;
+}
+.paymentDiv{
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.payInput{
+  background: none;
+  width: 300px;
+  height: 40px;
+  border-radius: 4px;
+}
+.mainSide{
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+/* Search User */
+.serarchUser{
+  display: flex;
+  overflow: hidden;
+}
+/* userlist horizontal fix */
+.usersFile{
+  height: 75vh;
+  overflow: scroll;
+}
+.myBox{
+  background-color:aquamarine;
   color: white;
+  position: fixed;
+  color: #000;
+  width: 100%;
+  /* padding-bottom: 20px !important; */
+}
+.boxItm{
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+  align-items: center;
+  padding-top: 7px;
+}
+.searchBox{
+background-color:aquamarine;
+  position: fixed;
+  width: 100%;
+}
+.mySearch{
+  background: none;
+  border: none;
+  outline: none;
+  color: black;
+  padding-left: 10px;
+  width: 100%;
+  height: 45px;
+}
+.scrollTBL{
+  margin-top: 70px !important;
+}
+.userNM{
+  position: fixed;
+  background-color: aquamarine;
+  width: 100%;
+  padding-left: 10px;
+}
+.saleValue{
+  position: fixed;
+  margin-top: 20px;
+  background-color: aquamarine;
+  width: 100%;
+  padding-left: 10px;
+}
+.UsrId{
+  position: fixed;
+  margin-top: 40px;
+  background-color: aquamarine;
+  width: 100%;
+  padding-left: 10px;
+}
+.remaingDue{
+  position: fixed;
+  margin-top: 58px;
+  background-color: aquamarine;
+  width: 100%;
+  padding-left: 10px;
+}
+.perInstall{
+  position: fixed;
+  margin-top: 77px;
+  background-color: aquamarine;
+  width: 100%;
+  padding-left: 10px;
+}
+.showingUL{
+  padding-top: 240px;
+}
+.backButton{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  border: 2px solid #000;
+  background: none;
+  outline: none !important;
+  padding: 6px 20px;
+  border-radius: 5px;
+}
+.nvItm{
+  text-decoration: none;
+  color: #000;
+}
+.mobileHRF{
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+}
+.formContainer{
+  padding-top: 130px;
 }
 
-.App-link {
-  color: #61dafb;
+.textInp{
+  border-top: none;
+  border-left: none;
+  border-right: none ;
+  border-bottom: 1px dotted black;
+  background: none;
+  width: 90%;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nameDivesee{
+  display: flex;
+}
+.photos{
+  /* right: 160px;
+ position: absolute; */
+  height: 150px;
+  width: 150px;
+  border: 1px solid black;
+}
+.photoFrame{
+  margin-top: 27px;
+}
+.displayname{
+  display: flex;
+}
+.logOutButton{
+  padding: 5px;
+  height: 40px;
+  background: none;
+  border-radius: 5px;
+}
+.usrInfo{
+  padding-top: 100px;
+}
+.payboxes{
+  background-color: aqua;
+  position: fixed;
+  margin-top: 100px;
+  width: 100%;
+  padding: 10px;
+}
+.sallpricebox{
+  display: flex;
+}
+.paymentOption{
+  display: flex;
+}
+.serialInfo{
+  display: flex;
+}
+.installMent{
+  display: flex;
+}
+.remainingInstall{
+  display: flex;
+}
+.userImg{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin-left: 60px;
 }
