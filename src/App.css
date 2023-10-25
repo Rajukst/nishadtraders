@@ -24,8 +24,8 @@ section{
 }
 .login-box{
   position: relative;
-  width: 400px;
-  height: 450px;
+  width: 350px;
+  height: 400px;
   background: transparent;
   border-radius: 20px;
   border: 2px solid rgb(255, 255, 255);
