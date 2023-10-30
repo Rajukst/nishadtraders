@@ -570,3 +570,51 @@ background-color:aquamarine;
   border-radius: 50%;
   margin-left: 60px;
 }
+/* .............. */
+.topColumns{
+  position: fixed;
+  width: 100vw;
+  margin-left: -12px;
+  background-color: rgb(255, 182, 193);
+}
+.overAll{
+  display: flex;
+  justify-content: space-around !important;
+}
+.userShow{
+padding-top: 85px;
+}
+.customerAdd {
+  position: fixed;
+  bottom: 50px;
+  right: 15px;
+}
+.customerAd{
+  text-decoration: none !important;
+  background-color: rgb(160, 8, 8);
+  color: white !important;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  border-radius: 7px;
+}
+.inputClass{
+  width: 100%;
+  height: 40px;
+  padding-left: 10px;
+  border: 1px solid lightgray;
+  margin-bottom: 15px;
+  border-radius: 7px;
+}
+.addButton{
+  /* position: absolute; */
+  margin-top: 140px;
+  background-color: rgb(94, 7, 7);
+  color: white;
+  width: 100%;
+  align-items: center;
+  padding: 10px;
+  border: none;
+  border-radius: 7px;
+}
