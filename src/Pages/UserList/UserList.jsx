@@ -27,7 +27,7 @@ const UserList = () => {
                     </div>
                     <div className="download">
                     <i class="fa-solid fa-download"></i>
-                    <p>Download</p>
+                    <p>Down</p>
                     </div>
                     <div className="alart">
                     <i class="fa-solid fa-bell"></i>
