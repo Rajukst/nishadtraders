@@ -622,9 +622,14 @@ padding-top: 85px;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding: 10px;
 }
 .filter, .download, .alart{
   text-align: center;
+  padding: 3px;
+}
+.filter, .download, .alart p{
+  font-size: 15px;
 }
 .serarch input{
   background: none;
