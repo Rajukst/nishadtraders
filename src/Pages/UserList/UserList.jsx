@@ -17,6 +17,23 @@ const UserList = () => {
                     <h6>100/=</h6>
                 </div>
                 </div>
+                <div className="filterDownLoadPress">
+                    <div className="serarch">
+                        <input type="text" name="" id="" placeholder='search'/>
+                    </div>
+                    <div className="filter">
+                    <i class="fa-solid fa-arrow-up-9-1"></i>
+                    <p>Filter</p>
+                    </div>
+                    <div className="download">
+                    <i class="fa-solid fa-download"></i>
+                    <p>Download</p>
+                    </div>
+                    <div className="alart">
+                    <i class="fa-solid fa-bell"></i>
+                    <p>Alert</p>
+                    </div>
+                </div>
             </div>
             <div className="userShow">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, autem?</p>
