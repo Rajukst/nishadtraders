@@ -622,7 +622,8 @@ padding-top: 85px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 .filter, .download, .alart{
   text-align: center;
