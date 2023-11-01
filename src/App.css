@@ -582,7 +582,7 @@ background-color:aquamarine;
   justify-content: space-around !important;
 }
 .userShow{
-padding-top: 85px;
+padding-top: 145px;
 }
 .customerAdd {
   position: fixed;
@@ -639,4 +639,40 @@ padding-top: 85px;
   height: 30px;
   border-radius: 10px;
   padding-left: 10px;
+}
+.userListss{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: left;
+}
+.userLinks{
+  text-decoration: none;
+  color: black;
+}
+.singleHeaders{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgray;
+}
+.mainContent{
+  display: flex;
+  align-items: center;
+
+}
+.nameCLass{
+  display: flex;
+  align-items: center;
+}
+.nameProperty{
+  background-color: #5E5DF0;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+}
+.paboDeboTxt{
+  display: flex;
+  justify-content: space-between;
 }
