@@ -13,8 +13,6 @@ const UserList = () => {
       return data;
     },
   });
-  const _id= user?._id;
-  console.log(_id)
   return (
     <Container fluid>
       <>
@@ -62,7 +60,7 @@ const UserList = () => {
                     item.userSerialNo?.includes(search);
             })
             ?.map((singleData, index) => (
-                <Link to={`${singleData?._id}`} className="userLinks">
+                <Link key={singleData._id} to={`${singleData?._id}`} className="userLinks">
                   <div className="userListss">
                    <p>{singleData?.name}</p>
                    <p>{singleData?.prevJer}</p>

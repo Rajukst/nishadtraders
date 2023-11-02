@@ -672,7 +672,13 @@ padding-top: 145px;
   padding: 10px;
   border-radius: 50%;
 }
+.paboDebo{
+border-bottom: 1px solid lightgray;
+}
 .paboDeboTxt{
   display: flex;
   justify-content: space-between;
+}
+.firstChild{
+  display: flex;
 }
