@@ -1,6 +1,7 @@
-import { useQuery } from "react-query";
+
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 const UserList = () => {
   const [search, setSearch] = useState("");
