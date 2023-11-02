@@ -1,7 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useQuery } from "react-query";
 const UserList = () => {
   const [search, setSearch] = useState("");
   const url = `http://localhost:5000/detaCollection`;
