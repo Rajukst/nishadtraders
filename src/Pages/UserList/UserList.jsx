@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "react-query";
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
