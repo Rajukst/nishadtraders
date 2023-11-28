@@ -7,7 +7,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const AddUser = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 
@@ -15,29 +14,57 @@ const AddUser = () => {
     setCurrentDate(date);
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    const prevJer = data.prevJer || 0;
     const requestBody = {
       ...data,
       currentDate,
+      prevJer: Number(prevJer),
     };
-    fetch('http://localhost:5000/users', {
+  
+    // Post data to the grahokCollection collection
+    const grahokResponse = await fetch('http://localhost:5000/users', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
       body: JSON.stringify(requestBody),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.insertedId) {
-          alert('Data inserted');
-        }
-      });
-    console.log(data);
+    });
+  
+    // Extract the _id from the grahokResponse
+    const grahokData = await grahokResponse.json();
+    const userId = grahokData.insertedId;
+  
+    const paymentListRequestBody = {
+      ...data,
+      prevJer: Number(prevJer),
+      userId: userId, // Include the userId
+    };
+  
+    // Post data to the paymentList collection
+    const paymentListResponse = await fetch('http://localhost:5000/paymentList', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(paymentListRequestBody),
+    });
+  
+    // Handle the responses from both APIs
+    const paymentListData = await paymentListResponse.json();
+  
+    if (userId && paymentListData.insertedId) {
+      alert('Data inserted successfully');
+    } else {
+      alert('There was an error inserting the data');
+    }
+  
+    // Navigate to the users page
     navigate('/users');
+  
+    // Reset the form
     reset();
   };
-
   return (
     <Container>
       <h6 className='mt-3 mb-3'>New Customer Add</h6>
@@ -55,7 +82,7 @@ const AddUser = () => {
           />
           <input
             className='inputClass'
-            {...register('prevJer', { required: true })}
+            {...register('prevJer')}
             placeholder='পূর্বের বাকি (জের)'
           />
           <DatePicker
@@ -63,7 +90,11 @@ const AddUser = () => {
             selected={currentDate}
             onChange={handleDateChange} // Add this line to handle date changes
           />
-          <input className='addButton' type='submit' name='' id='' />
+          <input className="addButton"
+      type="submit"
+      name=""
+      id=""
+     />
         </form>
       </div>
     </Container>

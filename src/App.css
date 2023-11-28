@@ -682,3 +682,47 @@ border-bottom: 1px solid lightgray;
 .firstChild{
   display: flex;
 }
+.three-dots {
+  cursor: pointer;
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  padding: 5px;
+  /* width: 50px; */
+}
+.custom-modal {
+  width: 40%;
+  max-width: 500px; /* Optionally, set a max-width to limit the width */
+  margin: 0 auto; /* Center the modal horizontally */
+  /* Add other styles as needed */
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: white;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.modalContent h6{
+  padding-top: 15px;
+  padding-left: 10px;
+}
+/* .addButton {
+
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+} */
+
+.disabledButton {
+  /* Style for disabled button */
+border-color: #ced4da;
+color: #6c757d;
+margin-top: 140px;
+background-color: #ced4da;
+color: white;
+width: 100%;
+align-items: center;
+padding: 10px;
+border: none;
+border-radius: 7px;
+}
