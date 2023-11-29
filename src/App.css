@@ -726,3 +726,9 @@ padding: 10px;
 border: none;
 border-radius: 7px;
 }
+.sticky-header th,
+.sticky-footer td {
+  position: sticky;
+  top: 10px;
+  background-color: #fff; /* Adjust the background color as needed */
+}

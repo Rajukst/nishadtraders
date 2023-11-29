@@ -13,22 +13,22 @@ const SingleUser = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [modalOpen, setModalOpen] = useState(false);
   const { register, handleSubmit, reset } = useForm();
-  const navigate= useNavigate()
+  const navigate = useNavigate();
   const [giveInput, setGiveInput] = useState("");
-const [gotInput, setGotInput] = useState("");
-const [paydetailsInput, setPaydetailsInput] = useState("");
+  const [gotInput, setGotInput] = useState("");
+  const [paydetailsInput, setPaydetailsInput] = useState("");
 
-const handleGiveInputChange = (event) => {
-  setGiveInput(event.target.value);
-};
-const handleGotInputChange = (event) => {
-  setGotInput(event.target.value);
-};
-const handlePaydetailsInputChange = (event) => {
-  setPaydetailsInput(event.target.value);
-};
-const isSubmitButtonEnabled = giveInput || gotInput || paydetailsInput;
-const buttonClass = isSubmitButtonEnabled ? "addButton" : "disabledButton";
+  const handleGiveInputChange = (event) => {
+    setGiveInput(event.target.value);
+  };
+  const handleGotInputChange = (event) => {
+    setGotInput(event.target.value);
+  };
+  const handlePaydetailsInputChange = (event) => {
+    setPaydetailsInput(event.target.value);
+  };
+  const isSubmitButtonEnabled = giveInput || gotInput || paydetailsInput;
+  const buttonClass = isSubmitButtonEnabled ? "addButton" : "disabledButton";
 
   const handleDateChange = (date) => {
     setCurrentDate(date);
@@ -46,7 +46,7 @@ const buttonClass = isSubmitButtonEnabled ? "addButton" : "disabledButton";
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, []);
+  }, [id]);
   const url = `http://localhost:5000/detaCollection`;
   const { data: user = [], isLoading } = useQuery({
     queryKey: ["detaCollection"],
@@ -75,56 +75,53 @@ const buttonClass = isSubmitButtonEnabled ? "addButton" : "disabledButton";
     };
   });
 
-  const userTotals = {};
+  // Calculate single user's prevJer
+  const singleUserData = joinedData.find((userData) => userData._id === singleUser._id);
+  const prevJer = singleUserData ? singleUserData.prevJer : 0;
 
-  for (const userData of user) {
-    const userId = userData._id;
-    userTotals[userId] = 0;
-  }
+  // Calculate single user's total
+  const currentUserTotal = payments
+    .filter((payment) => payment.usrId === singleUser._id)
+    .reduce((total, payment) => total + (parseInt(payment.give) - parseInt(payment.got)), 0);
 
-  for (const payment of payments) {
-    const userId = payment.usrId;
-    userTotals[userId] += parseInt(payment.give) - parseInt(payment.got);
-  }
-const usrId= singleUser._id;
-const name= singleUser.name;
-const mobile= singleUser.mobile;
+  // Calculate total including prevJer
+  const totalIncludingPrevJer = currentUserTotal + prevJer;
 
-const currentUserTotal = payments
-.filter((payment) => payment.usrId === usrId)
-.reduce((total, payment) => total + (parseInt(payment.give) - parseInt(payment.got)), 0);
+  console.log("PrevJer:", prevJer);
+  console.log("CurrentUserTotal:", currentUserTotal);
+  console.log("TotalIncludingPrevJer:", totalIncludingPrevJer);
 
-const onSubmit = async (data) => {
-  const give = data.give || 0;
-  const got = data.got || 0;
+  const onSubmit = async (data) => {
+    const give = data.give || 0;
+    const got = data.got || 0;
 
-  const requestBody = {
-    currentDate,
-    ...data,
-    usrId,
-    name,
-    mobile,
-    give,
-    got,
+    const requestBody = {
+      currentDate,
+      ...data,
+      usrId: singleUser._id,
+      name: singleUser.name,
+      mobile: singleUser.mobile,
+      give,
+      got,
+    };
+
+    const response = await fetch('http://localhost:5000/payment', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    const paymentData = await response.json();
+
+    if (paymentData.insertedId) {
+      alert('Data inserted successfully');
+    } else {
+      alert('There was an error inserting the data');
+    }
+    navigate("/users");
   };
-
-  const response = await fetch('http://localhost:5000/payment', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify(requestBody),
-  });
-
-  const paymentData = await response.json();
-
-  if (paymentData.insertedId) {
-    alert('Data inserted successfully');
-  } else {
-    alert('There was an error inserting the data');
-  }
-  navigate("/users")
-};
   return (
     <Container>
       <div className="singleHeaders mt-4">
@@ -180,7 +177,7 @@ const onSubmit = async (data) => {
       </div>
       <div className="paboDebo">
         <div className="paboDeboTxt">
-          <p>Pabo-{currentUserTotal}/-</p>
+          <p>Pabo-{totalIncludingPrevJer}/-</p>
           <p>Time Duration</p>
         </div>
       </div>
