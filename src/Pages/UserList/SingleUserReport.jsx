@@ -59,7 +59,7 @@ const SingleUserReport = () => {
       const userPayments = payments.filter((payment) => payment.usrId === singleUserReport._id);
 
       const formatBanglaDate = (dateString) => {
-        const options = { timeZone: 'Asia/Dhaka', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+        const options = { timeZone: 'Asia/Dhaka', weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
         return new Date(dateString).toLocaleString('en-US', options);
       };
   // Calculate total give and total got
@@ -71,7 +71,7 @@ const SingleUserReport = () => {
 
         <div>
             {/* <h1>This is Single User Report{singleUserReport._id}</h1> */}
-            <div className="mainContent">
+            <div className="mainContents">
           <Link className="myList pe-3" to={`/users/${id}`} >
             <i className="fa-solid fa-arrow-left "></i>
           </Link>
@@ -83,20 +83,19 @@ const SingleUserReport = () => {
             <div className="fullNameNdMobile">
               <h6>{singleUserReport?.name}</h6>
               <h6>
-              {totalIncludingPrevJer}
+              Pabo {totalIncludingPrevJer}/-
               </h6>
             </div>
+            <i class="fa-solid fa-download"></i>
           </div>
         </div>
         </div>
         <div className="paboDebo">
         <div className="paboDeboTxt">
-          {/* <p>Pabo-{totalIncludingPrevJer}/-</p> */}
-          {/* <p>Time Duration</p> */}
         </div>
       </div>
-      <Table striped bordered hover>
-          <thead className="sticky-header">
+      <Table className='reportTble' striped bordered hover>
+          <thead className="headerss">
             <tr>
               <th>Date</th>
               <th>Give</th>
@@ -104,18 +103,22 @@ const SingleUserReport = () => {
             </tr>
           </thead>
           <tbody>
-            {userPayments.map((payment) => (
-              <tr key={payment._id}>
+            {userPayments.reverse().map((payment) => (
+              <tr  className='tableBodys' key={payment._id}>
                 <td>{formatBanglaDate(payment.currentDate)}</td>
                 <td>{payment.give}</td>
                 <td>{payment.got}</td>
               </tr>
             ))}
+            <tr>
+              <td>PrevJer </td>
+              <td colSpan="2">{prevJer}</td>
+            </tr>
           </tbody>
           <tfoot className="sticky-footer">
             <tr>
               <td>Total</td>
-              <td>{totalGive}</td>
+              <td>{totalGive+prevJer}</td>
               <td>{totalGot}</td>
             </tr>
           </tfoot>

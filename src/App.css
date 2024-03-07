@@ -662,9 +662,16 @@ padding-top: 145px;
   align-items: center;
 
 }
+.mainContents{
+  display: flex;
+  align-items: center;
+  position: fixed;
+  overflow: hidden !important;
+}
 .nameCLass{
   display: flex;
   align-items: center;
+  justify-content: space-between !important;
 }
 .nameProperty{
   background-color: #5E5DF0;
@@ -726,9 +733,68 @@ padding: 10px;
 border: none;
 border-radius: 7px;
 }
-.sticky-header th,
-.sticky-footer td {
+.headerss {
   position: sticky;
-  top: 10px;
-  background-color: #fff; /* Adjust the background color as needed */
+  padding: 20px;
+  top: 0;
+  background-color: #f1f1f1; /* Add a background color for better visibility */
+  z-index: 100; /* Add a z-index to ensure it stays above other elements */
+}
+.reportTble{
+  margin-top: 90px;
+}
+.eidtUser{
+  display: flex;
+  align-items: center;
+}
+.editColor{
+  background-color: #5E5DF0;
+  padding: 10px;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+/* .editInput{
+  display: flex;
+  align-items: center;
+} */
+.intputTxt{
+  padding-left: 20px;
+  width: 100%;
+}
+.editInput {
+  position: relative;
+}
+.editInputs {
+  position: relative;
+  margin-left: 5px;
+}
+.mainCls{
+  margin-top: 30px;
+}
+.editInput input {
+  /* padding: 35px;  */
+  padding-left: 30px;
+  height: 50px;
+  width: 80vw;
+  outline: none;
+  border: 2px solid black;
+}
+.editInputs input {
+  padding-left: 30px; 
+  height: 50px;
+  width: 95vw;
+  outline: none;
+  border: 2px solid black;
+}
+.eidtUserBTN{
+  background-color: #000;
+  color: white;
+  margin-top: 20px;
+  width: 90%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
