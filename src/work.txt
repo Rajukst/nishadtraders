@@ -1,1 +1,74 @@
- 
+  <div className="userShow">
+          {joinedData
+            .filter((item) => {
+              return search.toLowerCase() === ""
+                ? item
+                : item?.name?.toLowerCase().includes(search) ||
+                  item.userSerialNo?.includes(search);
+            })
+            .map((singleData, index) => (
+              <Link
+                key={singleData._id}
+                to={`${singleData._id}`}
+                className="userLinks"
+              >
+                <div className="userListss">
+                  <p>{singleData?.name}</p>
+                  <p>{parseInt(singleData?.prevJer)+parseInt(userTotals[singleData._id])}</p>
+                  {/* <p>single Users prevJer: {singleData?.prevJer}</p> */}
+                </div>
+              </Link>
+            ))}
+        </div>
+
+//   // Join the user and payments arrays based on user ID
+//   const joinedData = user.map((userData) => {
+//     const paymentData = payments.find((payment) => payment.userId === userData._id);
+//     return {
+//       ...userData,
+//       prevJer: paymentData ? paymentData.prevJer : 0,
+//     };
+//   });
+// // Create an object to store user IDs and their corresponding total amounts
+// const userTotals = {};
+
+// // Initialize userTotals to 0 for all users
+// for (const userData of user) {
+//   const userId = userData._id;
+//   userTotals[userId] = 0;
+// }
+
+// // Iterate through the payments array and calculate the total amount for each user
+// for (const payment of payments) {
+//   const userId = payment.usrId;
+
+//   userTotals[userId] += parseInt(payment.give) - parseInt(payment.got);
+// }
+
+
+
+
+
+  console.log("PrevJer:", prevJer);
+  console.log("CurrentUserTotal:", currentUserTotal);
+  console.log("TotalIncludingPrevJer:", totalIncludingPrevJer);
+
+  console.log("Payments Data:", payments);
+
+// Check if payments array is available and contains necessary fields
+console.log("Filtered Payments:", payments.filter(payment => payment.usrId === singleUser._id));
+
+// Verify the logic used to calculate currentUserTotal
+console.log("Give and Got Values:", payments.filter(payment => payment.usrId === singleUser._id).map(payment => [payment.give, payment.got]));
+
+// Log the prevJer value
+console.log("PrevJer:", prevJer);
+
+// Debugging statements for currentUserTotal calculation
+payments.filter(payment => payment.usrId === singleUser._id).forEach(payment => {
+    console.log("Payment:", payment);
+    console.log("Give - Got:", parseInt(payment.give) - parseInt(payment.got));
+});
+
+// Debugging statement for totalIncludingPrevJer calculation
+console.log("TotalIncludingPrevJer:", totalIncludingPrevJer);

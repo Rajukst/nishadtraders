@@ -35,6 +35,7 @@ const SingleUser = () => {
   };
   const { id } = useParams();
   const [singleUser, setSingleUser] = useState({});
+  console.log(singleUser)
   useEffect(() => {
     const url = `http://localhost:5000/detaCollection/${id}`;
     fetch(url)
@@ -65,13 +66,17 @@ const SingleUser = () => {
       return data;
     },
   });
+  payments.map((payment) =>{
+    console.log(payment.usrId)
+  })
 
   // Join the user and payments arrays based on user ID
   const joinedData = user.map((userData) => {
-    const paymentData = payments.find((payment) => payment.userId === userData._id);
+    const paymentData = payments.find((payment) => payment?.usrId === userData?._id);
     return {
       ...userData,
       prevJer: paymentData ? paymentData.prevJer : 0,
+     
     };
   });
 
@@ -79,17 +84,18 @@ const SingleUser = () => {
   const singleUserData = joinedData.find((userData) => userData._id === singleUser._id);
   const prevJer = singleUserData ? singleUserData.prevJer : 0;
 
-  // Calculate single user's total
-  const currentUserTotal = payments
-    .filter((payment) => payment.usrId === singleUser._id)
-    .reduce((total, payment) => total + (parseInt(payment.give) - parseInt(payment.got)), 0);
-
+// Calculate single user's total
+const currentUserTotal = payments
+  .filter((payment) => payment.usrId === singleUser._id)
+  .reduce((total, payment) => {
+    // Parse give and got values to integers, default to 0 if NaN or undefined
+    const give = parseInt(payment.give) || 0;
+    const got = parseInt(payment.got) || 0;
+    return total + (give - got);
+  }, 0);
   // Calculate total including prevJer
   const totalIncludingPrevJer = currentUserTotal + prevJer;
 
-  console.log("PrevJer:", prevJer);
-  console.log("CurrentUserTotal:", currentUserTotal);
-  console.log("TotalIncludingPrevJer:", totalIncludingPrevJer);
 
   const onSubmit = async (data) => {
     const give = data.give || 0;

@@ -33,12 +33,12 @@ const AddUser = () => {
   
     // Extract the _id from the grahokResponse
     const grahokData = await grahokResponse.json();
-    const userId = grahokData.insertedId;
+    const usrId = grahokData.insertedId;
   
     const paymentListRequestBody = {
       ...data,
       prevJer: Number(prevJer),
-      userId: userId, // Include the userId
+      usrId: usrId, // Include the userId
     };
   
     // Post data to the paymentList collection
@@ -53,7 +53,7 @@ const AddUser = () => {
     // Handle the responses from both APIs
     const paymentListData = await paymentListResponse.json();
   
-    if (userId && paymentListData.insertedId) {
+    if (usrId && paymentListData.insertedId) {
       alert('Data inserted successfully');
     } else {
       alert('There was an error inserting the data');

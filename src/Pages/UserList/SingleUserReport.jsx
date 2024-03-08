@@ -41,16 +41,20 @@ const SingleUserReport = () => {
       });
     
       // Calculate single user's prevJer
-      const singleUserData = joinedData.find((userData) => userData._id === singleUserReport._id);
-      const prevJer = singleUserData ? singleUserData.prevJer : 0;
-    
-      // Calculate single user's total
-      const currentUserTotal = payments
-        .filter((payment) => payment.usrId === singleUserReport._id)
-        .reduce((total, payment) => total + (parseInt(payment.give) - parseInt(payment.got)), 0);
-    
-      // Calculate total including prevJer
-      const totalIncludingPrevJer = currentUserTotal + prevJer;
+      // const singleUserData = joinedData.find((userData) => userData._id === singleUserReport._id);
+      const prevJer = singleUserReport ? singleUserReport.prevJer : 0;
+     
+     // Calculate single user's total
+const currentUserTotal = payments
+.filter((payment) => payment.usrId === singleUserReport._id)
+.reduce((total, payment) => {
+  // Parse give and got values to integers, default to 0 if NaN or undefined
+  const give = parseInt(payment.give) || 0;
+  const got = parseInt(payment.got) || 0;
+  return total + (give - got);
+}, 0);
+// Calculate total including prevJer
+const totalIncludingPrevJer = currentUserTotal + prevJer;
     
       console.log("PrevJer:", prevJer);
       console.log("CurrentUserTotal:", currentUserTotal);
@@ -58,13 +62,19 @@ const SingleUserReport = () => {
 
       const userPayments = payments.filter((payment) => payment.usrId === singleUserReport._id);
 
-      const formatBanglaDate = (dateString) => {
-        const options = { timeZone: 'Asia/Dhaka', weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
-        return new Date(dateString).toLocaleString('en-US', options);
-      };
   // Calculate total give and total got
-  const totalGive = userPayments.reduce((total, payment) => total + parseInt(payment.give), 0);
-  const totalGot = userPayments.reduce((total, payment) => total + parseInt(payment.got), 0);
+  const totalGive = userPayments.reduce((total, payment) => {
+    // Parse payment.give to an integer, default to 0 if NaN or undefined
+    const give = parseInt(payment.give) || 0;
+    return total + give;
+  }, 0);
+  console.log("TotalGive:", totalGive);
+// Calculate total give and total got
+const totalGot = userPayments.reduce((total, payment) => {
+  // Parse payment.got to an integer, default to 0 if NaN or undefined
+  const got = parseInt(payment.got) || 0;
+  return total + got;
+}, 0);
     return (
         <>
         <Container>
@@ -103,13 +113,16 @@ const SingleUserReport = () => {
             </tr>
           </thead>
           <tbody>
-            {userPayments.reverse().map((payment) => (
-              <tr  className='tableBodys' key={payment._id}>
-                <td>{formatBanglaDate(payment.currentDate)}</td>
-                <td>{payment.give}</td>
-                <td>{payment.got}</td>
-              </tr>
-            ))}
+          {userPayments.map((payment) => (
+  // Only render the table row if the date is valid
+  payment.currentDate && (
+    <tr key={payment._id} className='tableBodys'>
+      <td>{payment.currentDate}</td>
+      <td>{payment.give}</td>
+      <td>{payment.got}</td>
+    </tr>
+  )
+))}
             <tr>
               <td>PrevJer </td>
               <td colSpan="2">{prevJer}</td>

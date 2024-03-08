@@ -22,8 +22,9 @@ const SingleUserDelete = () => {
         })
             .then((res) => res.json())
             .then((data) => {
+       
                 console.log(data.message); // Log success message
-                navigate('/'); // Redirect to home page or any other page
+                navigate('/users'); // Redirect to home page or any other page
             })
             .catch((error) => {
                 console.error('Error deleting user transactions:', error);
