@@ -8,7 +8,7 @@ const SingleUserDelete = () => {
 
     useEffect(() => {
         // Fetch single user data
-        const url = `http://localhost:5000/deletefetchdata/${id}`;
+        const url = `https://asadback.onrender.com/deletefetchdata/${id}`;
         fetch(url)
             .then((res) => res.json())
             .then((data) => setSingleUserDelete(data));
@@ -16,7 +16,7 @@ const SingleUserDelete = () => {
 
     // Function to handle deletion of all transactions for the user
     const handleDelete = () => {
-        const deleteUrl = `http://localhost:5000/deleteuserdata/${id}`;
+        const deleteUrl = `https://asadback.onrender.com/deleteuserdata/${id}`;
         fetch(deleteUrl, {
             method: 'DELETE'
         })

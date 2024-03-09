@@ -23,7 +23,7 @@ const AddUser = () => {
     };
   
     // Post data to the grahokCollection collection
-    const grahokResponse = await fetch('http://localhost:5000/users', {
+    const grahokResponse = await fetch('https://asadback.onrender.com/users', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -42,7 +42,7 @@ const AddUser = () => {
     };
   
     // Post data to the paymentList collection
-    const paymentListResponse = await fetch('http://localhost:5000/paymentList', {
+    const paymentListResponse = await fetch('https://asadback.onrender.com/paymentList', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
