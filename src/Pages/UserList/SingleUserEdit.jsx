@@ -35,14 +35,27 @@ const navigate= useNavigate()
       },
       body: JSON.stringify(singleUserEdit),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.modifiedCount > 0) {
-          toast.success("Data updated successfully");
-          navigate("/users")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data); // Log the response from the server
+        // Show an alert or toast message
+        toast.success("Data updated successfully")
+        // Redirect to the users page
+        navigate("/users");
+      })
+      .catch((error) => {
+        // Handle error
+        console.error('Error updating data:', error);
+        alert("Failed to update data");
       });
   };
+  
+  
   return (
    <form onSubmit={handleUpdateForm}>
      <div className="mainCls">

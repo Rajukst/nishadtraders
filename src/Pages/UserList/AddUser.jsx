@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import toast from 'react-hot-toast';
 
 const AddUser = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -54,9 +55,9 @@ const AddUser = () => {
     const paymentListData = await paymentListResponse.json();
   
     if (usrId && paymentListData.insertedId) {
-      alert('Data inserted successfully');
+      toast.success("Data inserted successfully")
     } else {
-      alert('There was an error inserting the data');
+      toast.error("There was an error inserting the data");
     }
   
     // Navigate to the users page
