@@ -1,7 +1,9 @@
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import React, { useEffect, useState } from 'react';
 import { Container, Table } from 'react-bootstrap';
 import { useQuery } from 'react-query';
 import { Link, useParams } from 'react-router-dom';
+import PdfData from './PdfData';
 
 const SingleUserReport = () => {
     const { id } = useParams();
@@ -85,6 +87,7 @@ const totalGot = userPayments.reduce((total, payment) => {
           <Link className="myList pe-3" to={`/users/${id}`} >
             <i className="fa-solid fa-arrow-left "></i>
           </Link>
+
           <div className="nameCLass">
             <h6 className="mt-2 me-3 nameProperty">
               {singleUserReport?.name?.charAt(0).toUpperCase() +
@@ -96,7 +99,19 @@ const totalGot = userPayments.reduce((total, payment) => {
               Pabo {totalIncludingPrevJer}/-
               </h6>
             </div>
-            <i class="fa-solid fa-download"></i>
+            <PDFDownloadLink
+        document={<PdfData data={userPayments}userPayments={userPayments} totalGive={totalGive} totalGot={totalGot} prevJer={prevJer} />}
+        filename={singleUserReport?.name}
+      >
+        {({ loading }) =>
+          loading ? (
+            <p>Loading Document...</p>
+          ) : (
+            <i className="fa-solid fa-download fa-2x ms-5"></i>
+          )
+        }
+      </PDFDownloadLink>
+        
           </div>
         </div>
         </div>
