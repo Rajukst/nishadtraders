@@ -37,7 +37,7 @@ const SingleUser = () => {
   const [singleUser, setSingleUser] = useState({});
   console.log(singleUser)
   useEffect(() => {
-    const url = `https://asadback.onrender.com/detaCollection/${id}`;
+    const url = `http://localhost:5000/detaCollection/${id}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
@@ -48,7 +48,7 @@ const SingleUser = () => {
         console.error('Error fetching data:', error);
       });
   }, [id]);
-  const url = `https://asadback.onrender.com/detaCollection`;
+  const url = `http://localhost:5000/detaCollection`;
   const { data: user = [], isLoading } = useQuery({
     queryKey: ["detaCollection"],
     queryFn: async () => {
@@ -57,7 +57,7 @@ const SingleUser = () => {
       return data;
     },
   });
-  const payurl = `https://asadback.onrender.com/paymentList`;
+  const payurl = `http://localhost:5000/paymentList`;
   const { data: payments = [] } = useQuery({
     queryKey: ["paymentList"],
     queryFn: async () => {
@@ -111,7 +111,7 @@ const currentUserTotal = payments
       got,
     };
 
-    const response = await fetch('https://asadback.onrender.com/payment', {
+    const response = await fetch('http://localhost:5000/payment', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',

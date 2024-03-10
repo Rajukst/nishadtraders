@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const UserList = () => {
   const [search, setSearch] = useState("");
-  const url = `https://asadback.onrender.com/detaCollection`;
+  const url = `http://localhost:5000/detaCollection`;
   const { data: user = [], isLoading } = useQuery({
     queryKey: ["detaCollection"],
     queryFn: async () => {
@@ -15,7 +15,7 @@ const UserList = () => {
     },
   });
 
-  const payurl = `https://asadback.onrender.com/paymentList`;
+  const payurl = `http://localhost:5000/paymentList`;
   const { data: payments = [] } = useQuery({
     queryKey: ["paymentList"],
     queryFn: async () => {

@@ -9,6 +9,7 @@ import SingleUserReport from './Pages/UserList/SingleUserReport';
 import SingleUserEdit from './Pages/UserList/SingleUserEdit';
 import SingleUserDelete from './Pages/UserList/SingleUserDelete';
 import { Toaster } from 'react-hot-toast';
+import SingleUserReportEdit from './Pages/UserList/SingleUserReportEdit';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path='/' element={<Login/>} />
         <Route path='users' element={<UserList/>} />
         <Route path='/add' element={<AddUser/>} />
+        <Route path='/:id' element={<SingleUserReportEdit/>} />
         <Route path="users/:id" element={<SingleUser/>} />   
         <Route path=":id/report" element={<SingleUserReport/>} />   
         <Route path=":id/edit" element={<SingleUserEdit/>} />   
