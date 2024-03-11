@@ -109,7 +109,6 @@ const SingleUserReport = () => {
                         text: "Your file has been deleted.",
                         icon: "success"
                     });
-
                     const remainingProducts = userPayments.filter(
                         (newUpdate) => newUpdate._id !== id
                     );

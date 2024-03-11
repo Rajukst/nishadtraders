@@ -97,13 +97,12 @@ const UserList = () => {
             </div>
             <div className="filter">
               <i className="fa-solid fa-arrow-up-9-1"></i>
-              <p>Filter</p>
             </div>
             <div className="download">
               <i className="fa-solid fa-download"></i>
-              <p>Down</p>
             </div>
           </div>
+          <small className="ps-5">Total Customer:<span className="lenghtCusto">{user.length}</span></small>
         </div>
         <div className="userShow">
           {joinedData
@@ -136,22 +135,6 @@ const UserList = () => {
           <Link className="customerAd" to="/add">
             <i className="fa-solid fa-user-plus me-1"></i>Add
           </Link>
-        </div>
-        <div className="bottomNav">
-          <div className="navBottomDisplay">
-            <div className="icons">
-            <i className="fa-solid fa-box fa-2x me-2"></i>
-            <h4>Tali</h4>
-            </div>
-            <div className="icons">
-            <i class="fa-solid fa-inbox fa-2x me-2"></i>
-            <h4>CashBox</h4>
-            </div>
-            <div className="icons">
-            <i className="fa-solid fa-box fa-2x me-2"></i>
-            <h4>Menu</h4>
-            </div>
-          </div>
         </div>
       </>
     </Container>

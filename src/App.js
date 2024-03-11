@@ -10,6 +10,9 @@ import SingleUserEdit from './Pages/UserList/SingleUserEdit';
 import SingleUserDelete from './Pages/UserList/SingleUserDelete';
 import { Toaster } from 'react-hot-toast';
 import SingleUserReportEdit from './Pages/UserList/SingleUserReportEdit';
+import ReportsPage from './Pages/UserList/ReportsPage';
+import Footer from './Pages/Footer/Footer';
+
 
 function App() {
   return (
@@ -17,6 +20,7 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path='/' element={<Login/>} />
+        <Route path='/reports' element={<ReportsPage/>} />
         <Route path='users' element={<UserList/>} />
         <Route path='/add' element={<AddUser/>} />
         <Route path='/:id' element={<SingleUserReportEdit/>} />
@@ -29,6 +33,7 @@ function App() {
   position="top-right"
   reverseOrder={false}
 />
+<Footer/>
       </BrowserRouter>
     </div>
   );
