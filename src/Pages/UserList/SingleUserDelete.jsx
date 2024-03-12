@@ -51,8 +51,24 @@ const SingleUserDelete = () => {
 
     return (
         <div>
-            <h1>This is Single User Delete {singleUserDelete._id}</h1>
-            <h4>Name: {singleUserDelete.name}</h4>
+            {/* <h1>This is Single User Delete {singleUserDelete._id}</h1>
+            <h4>Name: {singleUserDelete.name}</h4> */}
+            <div className="deleteCustomer">
+                <div className="leftCor ps-3">
+                <h6 className="mt-2 me-3 nameProperty">
+              {singleUserDelete?.name?.charAt(0).toUpperCase() +
+                singleUserDelete?.name?.charAt(1)}
+            </h6>
+                </div>
+                <div className="rightCor ps-2">
+                  <h6><strong>{singleUserDelete?.name}</strong></h6>
+                  <h6>{singleUserDelete?.mobile}</h6>
+                  <small className="deleteTxt">কাষ্টমার</small>
+                </div>
+            </div>
+            <div className="warningMessage">
+               <article><strong>{singleUserDelete?.name}</strong>কে ডিলিট করলে সার্ভারে থাকা <strong>{singleUserDelete?.name}</strong> এর সকল রেকর্ড ডিলিট হয়ে যাবে। একমত আছেন?</article>
+            </div>
             <button className="eidtUserBTN" onClick={handleDelete}>Delete User's Data</button>
         </div>
     );

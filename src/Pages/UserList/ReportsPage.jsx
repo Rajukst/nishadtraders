@@ -8,7 +8,7 @@ const ReportsPage = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
-
+    const [totalGiveAmount, setTotalGiveAmount] = useState(0); // State to store total give amount
     const handleStartDateChange = date => {
         setStartDate(date);
     };
@@ -28,8 +28,8 @@ const ReportsPage = () => {
     }, []);
 
     useEffect(() => {
-        console.log("startDate:", startDate);
-        console.log("endDate:", endDate);
+        console.log('Start date',startDate);
+        console.log('End date',endDate);
         // Filter showReport data based on the selected date range
         const filteredData = showReport.filter(report => {
             // Check if the report has currentDate property and it's in the expected format
@@ -37,14 +37,12 @@ const ReportsPage = () => {
                 // Parse currentDate string into Date object
                 const reportDate = new Date(report.currentDate);
                 // Ensure both reportDate, startDate, and endDate are in UTC for accurate comparison
-                reportDate.setMinutes(reportDate.getMinutes() - reportDate.getTimezoneOffset());
-                const startUTC = startDate ? new Date(startDate.toISOString().split('T')[0]) : null;
-                const endUTC = endDate ? new Date(endDate.toISOString().split('T')[0]) : null;
-                console.log("reportDate:", reportDate);
-                console.log("startUTC:", startUTC);
-                console.log("endUTC:", endUTC);
+                reportDate.setHours(0, 0, 0, 0); // Reset hours, minutes, seconds, and milliseconds for accurate date comparison
+                const startUTC = startDate ? new Date(startDate.getTime()) : null;
+                const endUTC = endDate ? new Date(endDate.getTime()) : null;
                 // Perform comparison
-                return (!startUTC || reportDate >= startUTC) && (!endUTC || reportDate <= endUTC);
+                return (!startUTC || reportDate >= startUTC) && (!endUTC || reportDate <= endUTC) && report.give > 0;
+                // The additional condition report.give > 0 ensures that reports with give amount 0 will be ignored
             } else {
                 // Handle case where currentDate property is missing or not in expected format
                 return false; // Exclude this report from filteredData
@@ -52,23 +50,29 @@ const ReportsPage = () => {
         });
         // Update the filtered data to state
         setFilteredData(filteredData);
-        console.log("filteredData:", filteredData);
     }, [startDate, endDate, showReport]);
     
     
     
+    useEffect(() => {
+        // Calculate total give amount
+        let totalAmount = 0;
+        filteredData.forEach(report => {
+            totalAmount += parseInt(report.give); // Assuming the property name is 'giveAmount'
+        });
+        setTotalGiveAmount(totalAmount);
+    }, [filteredData]);
     
-
     return (
         <>
             <div className="rptHead">
                 <div className='reports'>
                     <div className="reportsHead">
                         <div className="leftReprot">
-                            <p>Left Heading</p>
+                            <p>Total: {totalGiveAmount}</p>
                         </div>
                         <div className="rightReprot">
-                            <p>Right Heading</p>
+                            <p>Download Report</p>
                         </div>
                     </div>
                 </div>
@@ -95,8 +99,9 @@ const ReportsPage = () => {
                         />
                     </div>
                 </div>
+                <i className="fa-solid fa-cloud-arrow-down fa-2x ms-2"></i>
             </div>
-            <div className="rptDataShow">
+            <div className="rptDataShow mt-3">
                 <Table striped bordered hover>
                     <thead>
                         <tr>

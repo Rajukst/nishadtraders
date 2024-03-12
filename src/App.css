@@ -736,6 +736,7 @@ border-radius: 7px;
   border: 2px solid black;
 }
 .eidtUserBTN{
+
   background-color: #000;
   color: white;
   margin-top: 20px;
@@ -765,5 +766,25 @@ border-radius: 7px;
 }
 .datePickr{
   display: flex;
+  padding: 10px;
+}
+.deleteCustomer{
+  margin: 20px;
+  display: flex;
+  align-items: center!important;
+  border: 1px dotted black
+}
+.deleteTxt{
+  color: red;
+  font-weight: bold !important;;
+}
+.warningMessage{
+  margin-top: 40px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 70px;
+  border: 1px dotted black;
+}
+.warningMessage article{
   padding: 10px;
 }

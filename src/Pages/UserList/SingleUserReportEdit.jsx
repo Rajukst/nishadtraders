@@ -109,6 +109,7 @@ const SingleUserReportEdit = () => {
                         />
                         <br /> <br />
                         <input
+                        className="eidtUserBTN"
                             type="submit"
                             value="Update"
                         />
