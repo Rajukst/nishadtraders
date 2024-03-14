@@ -776,6 +776,16 @@ border-radius: 7px;
   display: flex;
   padding: 10px;
 }
+.selOption{
+  width: 100px;
+  margin: 10px;
+}
+.endDatePickr{
+  width: 100px;
+}
+.rptDataShow{
+  margin: 10px;
+}
 .deleteCustomer{
   margin: 20px;
   display: flex;

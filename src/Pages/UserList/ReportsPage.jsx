@@ -68,13 +68,14 @@ const ReportsPage = () => {
                             <p>Total: {totalAmount}</p>
                         </div>
                         <div className="rightReprot">
-                            <p>Download Report</p>
+                        <i className="fa-solid fa-cloud-arrow-down fa-2x ms-2"></i>
                         </div>
                     </div>
                 </div>
                 <div className="datePickr">
                     <div className="dateStart">
                         <DatePicker
+                        className='endDatePickr'
                             selected={startDate}
                             onChange={handleStartDateChange}
                             selectsStart
@@ -84,7 +85,8 @@ const ReportsPage = () => {
                         />
                     </div>
                     <div className="endDate ps-1">
-                        <DatePicker
+                        <DatePicker 
+                            className='endDatePickr'
                             selected={endDate}
                             onChange={handleEndDateChange}
                             selectsEnd
@@ -95,11 +97,11 @@ const ReportsPage = () => {
                         />
                     </div>
                 </div>
-                <select value={filterOption} onChange={handleFilterChange}>
+                <select className='selOption' value={filterOption} onChange={handleFilterChange}>
                     <option value="give">দিলাম</option>
                     <option value="got">আদায়</option>
                 </select>
-                <i className="fa-solid fa-cloud-arrow-down fa-2x ms-2"></i>
+              
             </div>
             <div className="rptDataShow mt-3">
                 <Table striped bordered hover>
