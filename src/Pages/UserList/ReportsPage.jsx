@@ -8,7 +8,9 @@ const ReportsPage = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
-    const [totalGiveAmount, setTotalGiveAmount] = useState(0); // State to store total give amount
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [filterOption, setFilterOption] = useState('give'); // Default filter option
+
     const handleStartDateChange = date => {
         setStartDate(date);
     };
@@ -17,51 +19,45 @@ const ReportsPage = () => {
         setEndDate(date);
     };
 
+    const handleFilterChange = event => {
+        setFilterOption(event.target.value);
+    };
+
     useEffect(() => {
         // Fetch data from the API
         fetch('http://localhost:5000/paymentList')
             .then(response => response.json())
             .then(data => {
-                setShowReport(data); // Update showReport state with fetched data
+                setShowReport(data);
             })
             .catch(error => console.error('Error fetching data:', error));
     }, []);
 
     useEffect(() => {
-        console.log('Start date',startDate);
-        console.log('End date',endDate);
-        // Filter showReport data based on the selected date range
         const filteredData = showReport.filter(report => {
-            // Check if the report has currentDate property and it's in the expected format
             if (report.hasOwnProperty('currentDate') && typeof report.currentDate === 'string') {
-                // Parse currentDate string into Date object
                 const reportDate = new Date(report.currentDate);
-                // Ensure both reportDate, startDate, and endDate are in UTC for accurate comparison
-                reportDate.setHours(0, 0, 0, 0); // Reset hours, minutes, seconds, and milliseconds for accurate date comparison
+                reportDate.setHours(0, 0, 0, 0);
                 const startUTC = startDate ? new Date(startDate.getTime()) : null;
                 const endUTC = endDate ? new Date(endDate.getTime()) : null;
-                // Perform comparison
-                return (!startUTC || reportDate >= startUTC) && (!endUTC || reportDate <= endUTC) && report.give > 0;
-                // The additional condition report.give > 0 ensures that reports with give amount 0 will be ignored
+
+                // Additional condition for filtering based on filterOption
+                return (!startUTC || reportDate >= startUTC) && (!endUTC || reportDate <= endUTC) && (filterOption === 'give' ? report.give > 0 : report.got > 0);
             } else {
-                // Handle case where currentDate property is missing or not in expected format
-                return false; // Exclude this report from filteredData
+                return false;
             }
         });
-        // Update the filtered data to state
         setFilteredData(filteredData);
-    }, [startDate, endDate, showReport]);
-    
-    
-    
+    }, [startDate, endDate, showReport, filterOption]);
+
     useEffect(() => {
-        // Calculate total give amount
-        let totalAmount = 0;
+        // Calculate total amount
+        let total = 0;
         filteredData.forEach(report => {
-            totalAmount += parseInt(report.give); // Assuming the property name is 'giveAmount'
+            total += filterOption === 'give' ? parseInt(report.give) : parseInt(report.got);
         });
-        setTotalGiveAmount(totalAmount);
-    }, [filteredData]);
+        setTotalAmount(total);
+    }, [filteredData, filterOption]);
     
     return (
         <>
@@ -69,7 +65,7 @@ const ReportsPage = () => {
                 <div className='reports'>
                     <div className="reportsHead">
                         <div className="leftReprot">
-                            <p>Total: {totalGiveAmount}</p>
+                            <p>Total: {totalAmount}</p>
                         </div>
                         <div className="rightReprot">
                             <p>Download Report</p>
@@ -99,6 +95,10 @@ const ReportsPage = () => {
                         />
                     </div>
                 </div>
+                <select value={filterOption} onChange={handleFilterChange}>
+                    <option value="give">দিলাম</option>
+                    <option value="got">আদায়</option>
+                </select>
                 <i className="fa-solid fa-cloud-arrow-down fa-2x ms-2"></i>
             </div>
             <div className="rptDataShow mt-3">
@@ -115,7 +115,7 @@ const ReportsPage = () => {
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{report?.name}</td>
-                                <td>{report?.give}</td>
+                                <td>{filterOption === 'give' ? report?.give : report?.got}</td>
                             </tr>
                         ))}
                     </tbody>

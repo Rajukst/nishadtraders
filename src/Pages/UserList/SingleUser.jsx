@@ -184,7 +184,7 @@ const currentUserTotal = payments
       <div className="paboDebo">
         <div className="paboDeboTxt">
           <p>Pabo-{totalIncludingPrevJer}/-</p>
-          <p>Time Duration</p>
+          <button className="sendMsg">Send Message</button>
         </div>
       </div>
       <div className="paboDeboForm">
