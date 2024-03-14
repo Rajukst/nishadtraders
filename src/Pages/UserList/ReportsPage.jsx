@@ -25,7 +25,7 @@ const ReportsPage = () => {
 
     useEffect(() => {
         // Fetch data from the API
-        fetch('http://localhost:5000/paymentList')
+        fetch('https://asadback.onrender.com/paymentList')
             .then(response => response.json())
             .then(data => {
                 setShowReport(data);
