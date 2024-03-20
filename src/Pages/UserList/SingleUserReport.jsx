@@ -89,7 +89,7 @@ const SingleUserReport = () => {
     const url = `https://asadback.onrender.com/reporttabledata/${id}`;
 
     Swal.fire({
-        title: "Are you sure to Delete The Product?",
+        title: "Are you sure to Delete?",
         text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,

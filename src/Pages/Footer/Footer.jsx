@@ -16,9 +16,6 @@ const Footer = () => {
                 <i className="fa-solid fa-inbox fa-2x me-2"></i>
                 </Link>
             </div>
-            <div className="icons">
-            <i className="fa-solid fa-box fa-2x me-2"></i>
-            </div>
           </div>
         </div>
         </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import Footer from "../Footer/Footer";
 
 const UserList = () => {
   const [search, setSearch] = useState("");
@@ -105,6 +106,7 @@ const UserList = () => {
           <small className="ps-5">Total Customer:<span className="lenghtCusto">{user.length}</span></small>
         </div>
         <div className="userShow">
+          {isLoading && <p>Loading Data</p>}
           {joinedData
             .filter((item) => {
               return search.toLowerCase() === ""
@@ -136,6 +138,7 @@ const UserList = () => {
             <i className="fa-solid fa-user-plus me-1"></i>Add
           </Link>
         </div>
+        <Footer/>
       </>
     </Container>
   );

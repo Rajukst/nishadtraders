@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import Footer from '../Footer/Footer';
 
 const ReportsPage = () => {
     const [showReport, setShowReport] = useState([]);
@@ -123,6 +124,7 @@ const ReportsPage = () => {
                     </tbody>
                 </Table>
             </div>
+            <Footer/>
         </>
     );
 };

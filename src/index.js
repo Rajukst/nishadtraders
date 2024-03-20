@@ -6,15 +6,16 @@ import reportWebVitals from './reportWebVitals';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AuthProvider from './providers/AuthProvider';
+
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-
-  <QueryClientProvider client={queryClient}>
-  <React.StrictMode>
-  <App />
-</React.StrictMode>
+<AuthProvider>
+  <QueryClientProvider client={queryClient}> 
+    <App />
   </QueryClientProvider>
+  </AuthProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
