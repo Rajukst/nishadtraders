@@ -50,7 +50,7 @@ const ReportsPage = () => {
         });
         setFilteredData(filteredData);
     }, [startDate, endDate, showReport, filterOption]);
-
+console.log('Filtered Data:', filteredData);
     useEffect(() => {
         // Calculate total amount
         let total = 0;
@@ -59,7 +59,10 @@ const ReportsPage = () => {
         });
         setTotalAmount(total);
     }, [filteredData, filterOption]);
-    
+      // Function to format date in local time zone
+      const formatLocalDate = date => {
+        return date.toLocaleDateString('en-US', { timeZone: 'UTC' });
+    }; 
     return (
         <>
             <div className="rptHead">
@@ -110,6 +113,8 @@ const ReportsPage = () => {
                         <tr>
                             <th>SL</th>
                             <th>Name</th>
+                            <th>Date</th>
+                            <th>Give/Got</th>
                             <th>Amount</th>
                         </tr>
                     </thead>
@@ -118,6 +123,8 @@ const ReportsPage = () => {
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{report?.name}</td>
+                                <td>{formatLocalDate(new Date(report.currentDate))}</td> 
+                                <td>{filterOption === 'give' ? <p>Give</p>: <p>Got</p>}</td>
                                 <td>{filterOption === 'give' ? report?.give : report?.got}</td>
                             </tr>
                         ))}

@@ -12,6 +12,8 @@ import { Toaster } from 'react-hot-toast';
 import SingleUserReportEdit from './Pages/UserList/SingleUserReportEdit';
 import ReportsPage from './Pages/UserList/ReportsPage';
 import SignUp from './Pages/Login/SignUp';
+import Employee from './Private/Employee';
+import SmsReport from './Pages/SmsReport/SmsReport';
 
 
 
@@ -22,6 +24,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Login/>} />
         <Route path='/signup' element={<SignUp/>} />
+        <Route path='/employee' element={<Employee/>} />
         <Route path='/reports' element={<ReportsPage/>} />
         <Route path='users' element={<UserList/>} />
         <Route path='/add' element={<AddUser/>} />
@@ -30,6 +33,7 @@ function App() {
         <Route path=":id/report" element={<SingleUserReport/>} />   
         <Route path=":id/edit" element={<SingleUserEdit/>} />   
         <Route path=":id/delete" element={<SingleUserDelete/>} />   
+        <Route path=":id/smsreport" element={<SmsReport/>} />   
       </Routes>
       <Toaster
   position="top-right"

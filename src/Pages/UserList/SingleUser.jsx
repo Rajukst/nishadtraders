@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import Modal from "react-modal";
 import { useQuery } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -66,9 +67,9 @@ const SingleUser = () => {
       return data;
     },
   });
-  payments.map((payment) =>{
-    console.log(payment.usrId)
-  })
+  // payments.map((payment) =>{
+  //   console.log(payment.usrId)
+  // })
 
   // Join the user and payments arrays based on user ID
   const joinedData = user.map((userData) => {
@@ -128,6 +129,21 @@ const currentUserTotal = payments
     }
     navigate("/users");
   };
+  const sendSMS = async () => {
+    try {
+        const apiUrl = `http://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/externalApiSendTextMessage.php?masking=Cloth%20BD&userName=clothbd&password=6e3ef0f41943adc9ee6e1bfdce47cf57&MsgType=TEXT&receiver=${singleUser?.mobile}&message= প্রিয় স্যার/ম্যাডাম,আপনার ৳${totalIncludingPrevJer} এর অর্থ মেসার্স নিসাদ টেলিকম (বারখাদা ত্রিমোহনী বাজার কুষ্টিয়া) এ মুলতুবি রয়েছে। বিশদ দেখতে এবং অর্থ প্রদানের জন্য এখানে ক্লিক করুন https://asadback.onrender.com/${singleUser._id}/smsreport`;
+        const response = await fetch(apiUrl);
+        
+        if (response.ok) {
+           toast.success("SMS sent successfully!")
+        } else {
+            console.error('Failed to send SMS:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error sending SMS:', error);
+    }
+};
+
   return (
     <Container>
       <div className="singleHeaders mt-4">
@@ -184,7 +200,7 @@ const currentUserTotal = payments
       <div className="paboDebo">
         <div className="paboDeboTxt">
           <p>Pabo-{totalIncludingPrevJer}/-</p>
-          <button className="sendMsg">Send Message</button>
+          <button onClick={sendSMS} className="sendMsg">Send Message</button>
         </div>
       </div>
       <div className="paboDeboForm">
