@@ -96,7 +96,7 @@ const SmsReport = () => {
                 // Only render the table row if the date is valid
                 payment.currentDate && (
                   <tr key={payment._id} className="tableBodys">
-                    <td>{payment.currentDate}</td>
+                    <td>{new Date(payment.currentDate).toLocaleDateString()}</td>
                     <td>{payment.give}</td>
                     <td>{payment.got}</td>
                   </tr>
