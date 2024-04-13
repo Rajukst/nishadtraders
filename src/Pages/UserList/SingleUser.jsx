@@ -1,4 +1,4 @@
-// SingleUser.js
+// Assuming sendInstantSMS is defined outside of the component
 
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import Modal from "react-modal";
 import { useQuery } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
 const SingleUser = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -18,7 +18,12 @@ const SingleUser = () => {
   const [giveInput, setGiveInput] = useState("");
   const [gotInput, setGotInput] = useState("");
   const [paydetailsInput, setPaydetailsInput] = useState("");
+  const [isChecked, setIsChecked] = useState(true);
 
+  // Function to handle checkbox toggle
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
+  };
   const handleGiveInputChange = (event) => {
     setGiveInput(event.target.value);
   };
@@ -36,17 +41,17 @@ const SingleUser = () => {
   };
   const { id } = useParams();
   const [singleUser, setSingleUser] = useState({});
-  console.log(singleUser)
+  console.log(singleUser);
   useEffect(() => {
     const url = `https://asadback.onrender.com/detaCollection/${id}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        console.log('Data from server:', data);
+        console.log("Data from server:", data);
         setSingleUser(data);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       });
   }, [id]);
   const url = `https://asadback.onrender.com/detaCollection`;
@@ -67,36 +72,35 @@ const SingleUser = () => {
       return data;
     },
   });
-  // payments.map((payment) =>{
-  //   console.log(payment.usrId)
-  // })
 
   // Join the user and payments arrays based on user ID
   const joinedData = user.map((userData) => {
-    const paymentData = payments.find((payment) => payment?.usrId === userData?._id);
+    const paymentData = payments.find(
+      (payment) => payment?.usrId === userData?._id
+    );
     return {
       ...userData,
       prevJer: paymentData ? paymentData.prevJer : 0,
-     
     };
   });
 
   // Calculate single user's prevJer
-  const singleUserData = joinedData.find((userData) => userData._id === singleUser._id);
+  const singleUserData = joinedData.find(
+    (userData) => userData._id === singleUser._id
+  );
   const prevJer = singleUserData ? singleUserData.prevJer : 0;
 
-// Calculate single user's total
-const currentUserTotal = payments
-  .filter((payment) => payment.usrId === singleUser._id)
-  .reduce((total, payment) => {
-    // Parse give and got values to integers, default to 0 if NaN or undefined
-    const give = parseInt(payment.give) || 0;
-    const got = parseInt(payment.got) || 0;
-    return total + (give - got);
-  }, 0);
+  // Calculate single user's total
+  const currentUserTotal = payments
+    .filter((payment) => payment.usrId === singleUser._id)
+    .reduce((total, payment) => {
+      // Parse give and got values to integers, default to 0 if NaN or undefined
+      const give = parseInt(payment.give) || 0;
+      const got = parseInt(payment.got) || 0;
+      return total + (give - got);
+    }, 0);
   // Calculate total including prevJer
   const totalIncludingPrevJer = currentUserTotal + prevJer;
-
 
   const onSubmit = async (data) => {
     const give = data.give || 0;
@@ -112,10 +116,10 @@ const currentUserTotal = payments
       got,
     };
 
-    const response = await fetch('https://asadback.onrender.com/payment', {
-      method: 'POST',
+    const response = await fetch("https://asadback.onrender.com/payment", {
+      method: "POST",
       headers: {
-        'content-type': 'application/json',
+        "content-type": "application/json",
       },
       body: JSON.stringify(requestBody),
     });
@@ -123,27 +127,40 @@ const currentUserTotal = payments
     const paymentData = await response.json();
 
     if (paymentData.insertedId) {
-      alert('Data inserted successfully');
+      if (isChecked) {
+        sendInstantSMS(got,totalIncludingPrevJer );
+      }
     } else {
-      alert('There was an error inserting the data');
+      alert("There was an error inserting the data");
     }
     navigate("/users");
   };
   const sendSMS = async () => {
     try {
-        const apiUrl = `https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/externalApiSendTextMessage.php?masking=Cloth%20BD&userName=clothbd&password=6e3ef0f41943adc9ee6e1bfdce47cf57&MsgType=TEXT&receiver=${singleUser?.mobile}&message= প্রিয় স্যার/ম্যাডাম,আপনার ৳${totalIncludingPrevJer} এর অর্থ মেসার্স নিসাদ টেলিকম (বারখাদা ত্রিমোহনী বাজার কুষ্টিয়া) এ মুলতুবি রয়েছে। বিশদ দেখতে এবং অর্থ প্রদানের জন্য এখানে ক্লিক করুন https://asadtelecom.vercel.app/${singleUser._id}/smsreport`;
-        const response = await fetch(apiUrl);
-        
-        if (response.ok) {
-           toast.success("SMS sent successfully!")
-        } else {
-            console.error('Failed to send SMS:', response.statusText);
-        }
+      const apiUrl = `https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/externalApiSendTextMessage.php?masking=Cloth%20BD&userName=clothbd&password=6e3ef0f41943adc9ee6e1bfdce47cf57&MsgType=TEXT&receiver=${singleUser?.mobile}&message= প্রিয় স্যার/ম্যাডাম,আপনার ৳${totalIncludingPrevJer} এর অর্থ মেসার্স নিসাদ টেলিকম (বারখাদা ত্রিমোহনী বাজার কুষ্টিয়া) এ মুলতুবি রয়েছে। বিশদ দেখতে এবং অর্থ প্রদানের জন্য এখানে ক্লিক করুন https://asadtelecom.vercel.app/${singleUser._id}/smsreport`;
+      const response = await fetch(apiUrl);
+      if (response.ok) {
+        toast.success("SMS sent successfully!");
+      } else {
+        console.error("Failed to send SMS:", response.statusText);
+      }
     } catch (error) {
-        console.error('Error sending SMS:', error);
+      console.error("Error sending SMS:", error);
     }
-};
-
+  };
+const sendInstantSMS= async(gotValue, totalIncludingPrevJer)=>{
+  try {
+    const apiUrl = `https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/externalApiSendTextMessage.php?masking=Cloth%20BD&userName=clothbd&password=6e3ef0f41943adc9ee6e1bfdce47cf57&MsgType=TEXT&receiver=${singleUser?.mobile}&message= প্রিয় স্যার/ম্যাডাম,আপনার আজকের জমা ${gotValue} এবং অবশিষ্ট ${totalIncludingPrevJer-gotValue} অর্থ মেসার্স নিসাদ টেলিকম এ মুলতুবি রয়েছে।`;
+    const response = await fetch(apiUrl);
+    if (response.ok) {
+      toast.success("SMS sent successfully!");
+    } else {
+      console.error("Failed to send SMS:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error sending SMS:", error);
+  }
+}
   return (
     <Container>
       <div className="singleHeaders mt-4">
@@ -200,48 +217,65 @@ const currentUserTotal = payments
       <div className="paboDebo">
         <div className="paboDeboTxt">
           <p>Pabo-{totalIncludingPrevJer}/-</p>
-          <button onClick={sendSMS} className="sendMsg">Send Message</button>
+          <button onClick={sendSMS} className="sendMsg">
+            Send Message
+          </button>
         </div>
       </div>
       <div className="paboDeboForm">
         <div className="payForm mt-4">
-        <form onSubmit={handleSubmit(onSubmit)}>
-    <div className="firstChild">
-      <input
-        className="inputClass me-3"
-        {...register("give", )}
-        placeholder="দিলাম"
-        value={giveInput}
-        onChange={handleGiveInputChange}
-      />
-      <input
-        className="inputClass"
-        {...register("got",)}
-        placeholder="পেলাম"
-        value={gotInput}
-        onChange={handleGotInputChange}
-      />
-    </div>
-    <input
-      className="inputClass"
-      {...register("paydetails",)}
-      placeholder="বিবরণ"
-      value={paydetailsInput}
-      onChange={handlePaydetailsInputChange}
-    />
-    <DatePicker
-      className="dateClass"
-      selected={currentDate}
-      onChange={handleDateChange} // Add this line to handle date changes
-    />
-    <input
-      className={buttonClass}
-      type="submit"
-      name=""
-      id=""
-      disabled={!isSubmitButtonEnabled}
-    />
-  </form>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="firstChild">
+              <input
+                className="inputClass me-3"
+                {...register("give")}
+                placeholder="দিলাম"
+                value={giveInput}
+                onChange={handleGiveInputChange}
+              />
+              <input
+                className="inputClass"
+                {...register("got")}
+                placeholder="পেলাম"
+                value={gotInput}
+                onChange={handleGotInputChange}
+              />
+            </div>
+            <input
+              className="inputClass"
+              {...register("paydetails")}
+              placeholder="বিবরণ"
+              value={paydetailsInput}
+              onChange={handlePaydetailsInputChange}
+            />
+            <div className="InputDates">
+            <DatePicker
+              className="dateClass"
+              selected={currentDate}
+              onChange={handleDateChange} // Add this line to handle date changes
+            />
+            <div className="shareSMS ms-5">
+              <h6 className="mt-1">Send SMS</h6>
+              <div className="onOffToggles ms-2">
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    checked={isChecked}
+                    onChange={handleToggle}
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </div>
+            </div>
+            </div>
+            <input
+              className={buttonClass}
+              type="submit"
+              name=""
+              id=""
+              disabled={!isSubmitButtonEnabled}
+            />
+          </form>
         </div>
       </div>
     </Container>
