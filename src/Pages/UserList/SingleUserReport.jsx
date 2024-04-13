@@ -176,7 +176,8 @@ const SingleUserReport = () => {
           </div>
         </div>
         <div className="paboDebo">
-          <div className="paboDeboTxt"></div>
+          <div className="paboDeboTxt">
+          </div>
         </div>
         <Table className="reportTble" striped bordered hover>
           <thead className="headerss">
@@ -206,7 +207,7 @@ const SingleUserReport = () => {
                 )
             )}
             <tr>
-              <td>PrevJer </td>
+              <td>PrevJer  {singleUserReport?.description}  </td>
               <td colSpan="2">{prevJer}</td>
             </tr>
           </tbody>

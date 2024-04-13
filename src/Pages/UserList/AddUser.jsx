@@ -86,6 +86,11 @@ const AddUser = () => {
             {...register('prevJer')}
             placeholder='পূর্বের বাকি (জের)'
           />
+          <input
+            className='inputClass'
+            {...register('description')}
+            placeholder='বিবরণ'
+          />
           <DatePicker
             className='dateClass'
             selected={currentDate}
