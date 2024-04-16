@@ -523,7 +523,7 @@ margin-bottom: 75px;
   padding-top: 5px;
   padding-bottom: 5px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 .icons{
   display: flex;
@@ -764,13 +764,15 @@ border-radius: 7px;
   width: 100%;
   /* height: 60px; */
   background-color: yellow;
+  position: fixed;
+  margin-top: -20px;
 }
 .reportsHead{
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px;
+  padding: 5px;
 }
 .datePickr{
   display: flex;
@@ -779,13 +781,18 @@ border-radius: 7px;
 .selOption{
   width: 100px;
   margin: 10px;
+  background: none;
 }
 .endDatePickr{
   width: 100px;
+  background: none;
+  outline: none;
 }
 .rptDataShow{
-  margin: 10px;
+ padding-top: 100px;
+ padding-bottom: 60px;
 }
+
 .deleteCustomer{
   margin: 20px;
   display: flex;

@@ -10,7 +10,7 @@ const ReportsPage = () => {
     const [endDate, setEndDate] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
-    const [filterOption, setFilterOption] = useState('give'); // Default filter option
+    const [filterOption, setFilterOption] = useState('select'); // Default filter option
 
     const handleStartDateChange = date => {
         setStartDate(date);
@@ -68,15 +68,11 @@ console.log('Filtered Data:', filteredData);
             <div className="rptHead">
                 <div className='reports'>
                     <div className="reportsHead">
-                        <div className="leftReprot">
-                            <p>Total: {totalAmount}</p>
+                        <div className="leftReprot ms-2 mt-2">
+                            <h6>Total/=</h6>
+                            <h6>{totalAmount}</h6>
                         </div>
-                        <div className="rightReprot">
-                        <i className="fa-solid fa-cloud-arrow-down fa-2x ms-2"></i>
-                        </div>
-                    </div>
-                </div>
-                <div className="datePickr">
+                        <div className="datePickr">
                     <div className="dateStart">
                         <DatePicker
                         className='endDatePickr'
@@ -101,11 +97,18 @@ console.log('Filtered Data:', filteredData);
                         />
                     </div>
                 </div>
+                        <div className="rightReprot">
+                        <i className="fa-solid fa-cloud-arrow-down fa-2x ms-2"></i>
+                        </div> 
+                    </div>
+                    <div className="selectDate">
                 <select className='selOption' value={filterOption} onChange={handleFilterChange}>
+                    <option value="select">নির্বাচন করুন</option>
                     <option value="give">দিলাম</option>
                     <option value="got">আদায়</option>
                 </select>
-              
+                </div>
+                </div>
             </div>
             <div className="rptDataShow mt-3">
                 <Table striped bordered hover>

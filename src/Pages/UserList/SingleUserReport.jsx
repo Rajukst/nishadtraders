@@ -62,9 +62,9 @@ const SingleUserReport = () => {
   // Calculate total including prevJer
   const totalIncludingPrevJer = currentUserTotal + prevJer;
 
-  console.log("PrevJer:", prevJer);
-  console.log("CurrentUserTotal:", currentUserTotal);
-  console.log("TotalIncludingPrevJer:", totalIncludingPrevJer);
+  // console.log("PrevJer:", prevJer);
+  // console.log("CurrentUserTotal:", currentUserTotal);
+  // console.log("TotalIncludingPrevJer:", totalIncludingPrevJer);
 
   const userPayments = payments.filter(
     (payment) => payment.usrId === singleUserReport._id
@@ -76,7 +76,7 @@ const SingleUserReport = () => {
     const give = parseInt(payment.give) || 0;
     return total + give;
   }, 0);
-  console.log("TotalGive:", totalGive);
+  // console.log("TotalGive:", totalGive);
   // Calculate total give and total got
   const totalGot = userPayments.reduce((total, payment) => {
     // Parse payment.got to an integer, default to 0 if NaN or undefined
@@ -133,7 +133,9 @@ const SingleUserReport = () => {
         }
     });
 };
-
+const formatLocalDate = date => {
+  return date.toLocaleDateString('en-US', { timeZone: 'UTC' });
+};
   return (
     <>
       <Container>
@@ -194,7 +196,8 @@ const SingleUserReport = () => {
                 // Only render the table row if the date is valid
                 payment.currentDate && (
                   <tr key={payment._id} className="tableBodys">
-                    <td>{payment.currentDate}</td>
+                    <td>{formatLocalDate(new Date(payment.currentDate))}</td> 
+                    {/* <td>{payment.currentDate}</td> */}
                     <td>{payment.give}</td>
                     <td>{payment.got}</td>
                     <td>
@@ -207,7 +210,10 @@ const SingleUserReport = () => {
                 )
             )}
             <tr>
-              <td>PrevJer  {singleUserReport?.description}  </td>
+              <td>
+                <p>PrevJer</p>
+                <p>{singleUserReport?.description}</p>
+                  </td>
               <td colSpan="2">{prevJer}</td>
             </tr>
           </tbody>

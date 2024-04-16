@@ -1,74 +1,103 @@
-  <div className="userShow">
-          {joinedData
+import React, { useState, useEffect, useRef } from "react";
+import { Container } from "react-bootstrap";
+import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
+import Footer from "../Footer/Footer";
+import CustomLoader from "../../CustomLoader/CustomLoader";
+
+const UserList = () => {
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const { data: users = [], isLoading } = useQuery(["users", page], async () => {
+    const res = await fetch(`https://asadback.onrender.com/detaCollection?page=${page}`);
+    const data = await res.json();
+    return data;
+  });
+
+  const observer = useRef();
+
+  useEffect(() => {
+    if (!isLoading) {
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          setPage((prevPage) => prevPage + 1);
+        }
+      });
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (observer.current) {
+      observer.current.disconnect();
+    }
+
+    if (!isLoading) {
+      observer.current.observe(document.querySelector(".endOfUsers"));
+    }
+
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+    };
+  }, [isLoading]);
+
+  return (
+    <>
+      <Container fluid>
+        <div className="topColumns">
+          {/* Your top columns content */}
+        </div>
+        <div className="filterDownLoadPress">
+          <div className="serarch">
+            <input
+              type="text"
+              name=""
+              id=""
+              placeholder="Search"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          {/* Other filter and download elements */}
+        </div>
+        <small className="ps-5">Total Customer:<span className="lenghtCusto">{users.length}</span></small>
+        <div className="userShow">
+          {isLoading && <CustomLoader />}
+          {users
             .filter((item) => {
               return search.toLowerCase() === ""
                 ? item
                 : item?.name?.toLowerCase().includes(search) ||
-                  item.userSerialNo?.includes(search);
+                    item.userSerialNo?.includes(search);
             })
-            .map((singleData, index) => (
-              <Link
-                key={singleData._id}
-                to={`${singleData._id}`}
-                className="userLinks"
-              >
-                <div className="userListss">
-                  <p>{singleData?.name}</p>
-                  <p>{parseInt(singleData?.prevJer)+parseInt(userTotals[singleData._id])}</p>
-                  {/* <p>single Users prevJer: {singleData?.prevJer}</p> */}
-                </div>
-              </Link>
-            ))}
+            .map((singleData, index) => {
+              const totalIncludingPrevJer = parseInt(singleData.prevJer) + parseInt(singleData.total);
+              console.log("Total Including prevJer:", totalIncludingPrevJer);
+
+              return (
+                <Link
+                  key={singleData._id}
+                  to={`${singleData._id}`}
+                  className="userLinks"
+                >
+                  <div className="userListss">
+                    <p>{singleData?.name}</p>
+                    <p>{totalIncludingPrevJer}</p>
+                  </div>
+                </Link>
+              );
+            })}
+          {!isLoading && <div className="endOfUsers" />}
         </div>
+        <div className="customerAdd">
+          <Link className="customerAd" to="/add">
+            <i className="fa-solid fa-user-plus me-1"></i>Add
+          </Link>
+        </div>
+      </Container>
+      <Footer />
+    </>
+  );
+};
 
-//   // Join the user and payments arrays based on user ID
-//   const joinedData = user.map((userData) => {
-//     const paymentData = payments.find((payment) => payment.userId === userData._id);
-//     return {
-//       ...userData,
-//       prevJer: paymentData ? paymentData.prevJer : 0,
-//     };
-//   });
-// // Create an object to store user IDs and their corresponding total amounts
-// const userTotals = {};
-
-// // Initialize userTotals to 0 for all users
-// for (const userData of user) {
-//   const userId = userData._id;
-//   userTotals[userId] = 0;
-// }
-
-// // Iterate through the payments array and calculate the total amount for each user
-// for (const payment of payments) {
-//   const userId = payment.usrId;
-
-//   userTotals[userId] += parseInt(payment.give) - parseInt(payment.got);
-// }
-
-
-
-
-
-  console.log("PrevJer:", prevJer);
-  console.log("CurrentUserTotal:", currentUserTotal);
-  console.log("TotalIncludingPrevJer:", totalIncludingPrevJer);
-
-  console.log("Payments Data:", payments);
-
-// Check if payments array is available and contains necessary fields
-console.log("Filtered Payments:", payments.filter(payment => payment.usrId === singleUser._id));
-
-// Verify the logic used to calculate currentUserTotal
-console.log("Give and Got Values:", payments.filter(payment => payment.usrId === singleUser._id).map(payment => [payment.give, payment.got]));
-
-// Log the prevJer value
-console.log("PrevJer:", prevJer);
-
-// Debugging statements for currentUserTotal calculation
-payments.filter(payment => payment.usrId === singleUser._id).forEach(payment => {
-    console.log("Payment:", payment);
-    console.log("Give - Got:", parseInt(payment.give) - parseInt(payment.got));
-});
-
-// Debugging statement for totalIncludingPrevJer calculation
-console.log("TotalIncludingPrevJer:", totalIncludingPrevJer);
+export default UserList;

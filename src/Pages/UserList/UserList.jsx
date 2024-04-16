@@ -73,6 +73,7 @@ const UserList = () => {
   const grandTotal = totalGive - totalGot + totalPrevJer;
 
   return (
+    <>
     <Container fluid>
       <>
         <div className="topColumns">
@@ -138,9 +139,10 @@ const UserList = () => {
             <i className="fa-solid fa-user-plus me-1"></i>Add
           </Link>
         </div>
-        <Footer/>
       </>
     </Container>
+    <Footer/>
+    </>
   );
 };
 

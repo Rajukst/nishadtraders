@@ -11,7 +11,7 @@ const Login = () => {
   } = useForm();
   const navigate = useNavigate();
   const location= useLocation();
-  const from= location.state?.from?.pathname || "/users"
+  const from= location.state?.from?.pathname || "/"
   const { signIn } = useAuth();
   const handleLogin = (data) => {
     signIn(data.email, data.password)
