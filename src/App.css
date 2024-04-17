@@ -778,6 +778,9 @@ border-radius: 7px;
   display: flex;
   padding: 10px;
 }
+.dateClass{
+  width: 100px;
+}
 .selOption{
   width: 100px;
   margin: 10px;
