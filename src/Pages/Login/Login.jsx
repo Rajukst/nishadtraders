@@ -1,38 +1,45 @@
-
-import { useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../../Hooks/useAuth";
+import {React, useEffect } from "react";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { loginUser } from "../../redux/allFeatures/Auth/authSlice";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
-  const {
-    register,
-    handleSubmit,
-  } = useForm();
+  const { register, handleSubmit } = useForm();
+  const location = useLocation();
   const navigate = useNavigate();
-  const location= useLocation();
-  const from= location.state?.from?.pathname || "/"
-  const { signIn } = useAuth();
-  const handleLogin = (data) => {
-    signIn(data.email, data.password)
-      .then((result) => {
-        const loggedUser = result.user;
-        toast.success("Login Success!");
-        console.log(loggedUser);
-        navigate(from, {replace:true})
-      })
-      .catch((error) => toast.error(error.message));
+  const destination = location.state?.from?.pathname || "/users";
+  const dispatch= useDispatch()
+  const {isLoading, email, isError, error}= useSelector(state=>state.auth)
+  const loginSubmit = ({email, password}) => {
+        dispatch(loginUser({email, password}))
+       
   };
+  useEffect(()=>{
+    if(!isLoading && email){
+      navigate(destination, { replace: true });
+    }
+  },[isLoading, email])
+
+// error message showing UI
+useEffect(()=>{
+if(isError){
+  toast.error(error)
+}
+},[isError, error])
     return (
         <section>
       <div className="login-box"> 
-        <form onSubmit={handleSubmit(handleLogin)}>
+        <form onSubmit={handleSubmit(loginSubmit)}>
           <h2 className="login-txt">Login</h2>
           <div className="input-box">
             <span className="icon">
               <i className="fa-solid fa-envelope"></i>
             </span>
-            <input type="email" name="" id="names" {...register("email")} required/>
+            <input type="email" name="" id="names" 
+            {...register("email")}
+             required/>
             <label>Email</label>
           </div>
           <div className="input-box">

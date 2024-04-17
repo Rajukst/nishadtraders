@@ -38,14 +38,14 @@ const UserList = () => {
     const paymentData = payments.find(
       (payment) => payment.usrId === userData._id
     );
-    console.log("Payment data for user:", userData.name, paymentData); // Log payment data for each user
+    // console.log("Payment data for user:", userData.name, paymentData); // Log payment data for each user
     return {
       ...userData,
       prevJer: paymentData ? paymentData.prevJer : 0,
     };
   });
 
-  console.log("Joined data:", joinedData); // Log joined data array
+  // console.log("Joined data:", joinedData); // Log joined data array
 
   // Create an object to store user IDs and their corresponding total amounts
   const userTotals = {};
@@ -65,7 +65,7 @@ const UserList = () => {
     userTotals[userId] += give - got;
   }
 
-  console.log("User totals:", userTotals);
+  // console.log("User totals:", userTotals);
 
   // Calculate total give, got, and prevJer for all users
   let totalGive = 0;
@@ -82,22 +82,32 @@ const UserList = () => {
   const grandTotal = totalGive - totalGot + totalPrevJer;
 
   // Calculate total number of pages
+  // useEffect(() => {
+  //   setTotalPages(Math.ceil(joinedData.length / pageSize));
+  // }, [joinedData]);
   useEffect(() => {
-    setTotalPages(Math.ceil(joinedData.length / pageSize));
-  }, [joinedData]);
-
+    const totalPages = Math.ceil(joinedData.length / pageSize);
+    setTotalPages(totalPages);
+}, [joinedData.length, pageSize]);
   // Slice the data array to get the items for the current page
   useEffect(() => {
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = currentPage * pageSize;
     const newData = joinedData.slice(startIndex, endIndex);
+  
+    // Filter out items already displayed to avoid duplication
     const filteredData = newData.filter(
-      (item) =>
-        !displayedData.some((displayedItem) => displayedItem._id === item._id)
+      (item) => !displayedData.some((displayedItem) => displayedItem._id === item._id)
     );
-    setDisplayedData((prevData) => [...prevData, ...filteredData]);
+  
+    // Update displayedData with the new data
+    if (filteredData.length > 0) {
+      setDisplayedData((prevData) => [...prevData, ...filteredData]);
+    }
+  
     setIsLoading(false);
-  }, [currentPage, joinedData]);
+  }, [currentPage, joinedData, displayedData, pageSize]);
+  
 
   // Handle scroll event
   const handleScroll = useCallback(() => {
@@ -156,6 +166,7 @@ const UserList = () => {
             </small>
           </div>
           <div className="userShow">
+            
             {(userLoading || paymentsLoading) && <CustomLoader/> }
             {displayedData.length === 0 && !isLoading && (
               <p>No data to show</p>
@@ -170,7 +181,7 @@ const UserList = () => {
               .map((singleData) => {
                 const totalIncludingPrevJer =
                   parseInt(singleData.prevJer) + userTotals[singleData._id];
-                console.log("Total Including prevJer:", totalIncludingPrevJer);
+                // console.log("Total Including prevJer:", totalIncludingPrevJer);
 
                 return (
                   <Link

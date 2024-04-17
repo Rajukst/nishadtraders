@@ -6,16 +6,17 @@ import reportWebVitals from './reportWebVitals';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import AuthProvider from './providers/AuthProvider';
+import { Provider } from 'react-redux';
+import store from './redux/Store/store';
 
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-<AuthProvider>
+  <Provider store={store}>
   <QueryClientProvider client={queryClient}> 
     <App />
   </QueryClientProvider>
-  </AuthProvider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

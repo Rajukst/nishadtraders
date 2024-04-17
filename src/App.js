@@ -12,20 +12,36 @@ import { Toaster } from 'react-hot-toast';
 import SingleUserReportEdit from './Pages/UserList/SingleUserReportEdit';
 import ReportsPage from './Pages/UserList/ReportsPage';
 import SignUp from './Pages/Login/SignUp';
-import Employee from './Private/Employee';
-import SmsReport from './Pages/SmsReport/SmsReport';
 
+import SmsReport from './Pages/SmsReport/SmsReport';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { setUser, toggleLoading } from './redux/allFeatures/Auth/authSlice';
+import auth from './Firebase/firebase.config';
+import PrivateRoute from './Pages/Private/PrivateRoute';
 
 function App() {
+  const dispatch= useDispatch()
+  useEffect(()=>{
+    onAuthStateChanged(auth, (user)=>{
+     if(user){
+      dispatch(setUser(user.email))
+      console.log(user)
+     }
+     else{
+      dispatch(toggleLoading())
+     }
+    })
+  },[])
   return (
     <div className="App">
       <BrowserRouter>
       <Routes>
         <Route path='/' element={<Login/>} />
         <Route path='/signup' element={<SignUp/>} />
-        <Route path='/employee' element={<Employee/>} />
         <Route path='/reports' element={<ReportsPage/>} />
-        <Route path='users' element={<UserList/>} />
+        <Route path='users' element={<PrivateRoute><UserList/></PrivateRoute>} />
         <Route path='/add' element={<AddUser/>} />
         <Route path='/:id' element={<SingleUserReportEdit/>} />
         <Route path="users/:id" element={<SingleUser/>} />   

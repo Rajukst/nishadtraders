@@ -778,6 +778,9 @@ border-radius: 7px;
   display: flex;
   padding: 10px;
 }
+.signout{
+  cursor: pointer;
+}
 .dateClass{
   width: 100px;
 }

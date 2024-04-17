@@ -1,68 +1,52 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-
+import React, { useEffect, useState } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useRegisterMutation } from '../../redux/allFeatures/Auth/authApi';
+import { createUser } from '../../redux/allFeatures/Auth/authSlice';
 import toast from 'react-hot-toast';
-import { useForm } from 'react-hook-form';
-import useAuth from '../../Hooks/useAuth';
-
 
 const SignUp = () => {
-    const { createUser, updateUserProfile } = useAuth();
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-    } = useForm();
-    const navigate= useNavigate()
-    const onSubmit = (data) => {
-      createUser(data.email, data.password)
-        .then((result) => {
-          const loggedUser = result.user;
-          console.log(loggedUser);
-          updateUserProfile(data.name)
-               .then(()=>{
-                const savedUser ={name:data.name, email:data.email}
-                fetch("https://asadback.onrender.com/adminusers",{
-                  method: "POST",
-                  headers:{
-                    'content-type': 'application/json'
-                  },
-                  body: JSON.stringify(savedUser)
-                })
-                .then(res=>res.json())
-                .then(data =>{
-                  if(data.insertedId){
-                    console.log("User Profile Updated!");
-                    toast.success("Signup Completed!");
-                    reset();
-                    navigate("/users")
-                  }
-                })
-           
-          })
-        })
-        .catch((error) => toast.error(error.message));
+  const {register, control, handleSubmit,reset, formState: { errors }} = useForm();
+  const password= useWatch({control, name: "password"})
+  const confirmPassword= useWatch({control, name: "confirmPassword"})
+  const navigate= useNavigate();
+  const [disabled, setDisabled]= useState(true);
+  const {isLoading, email, isError, error}= useSelector(state=>state.auth)
+  const [postUser]= useRegisterMutation()
+  const dispatch= useDispatch()
+  useEffect(()=>{
+    if(
+      password !== undefined &&
+        password !== "" &&
+        confirmPassword !== undefined &&
+        confirmPassword !== "" &&
+        password === confirmPassword
+  )
+    {
+      setDisabled(false)
+    }else{
+      setDisabled(true)
+    }
+  },[password, confirmPassword])
+  // error message showing UI
+  useEffect(()=>{
+    if(isError){
+      toast.error(error)
+    }
+    },[isError, error])
+    const registerSubmit = (e) => {
+      console.log(e);
+      dispatch(createUser({email:e.email, password:e.password}))
+      postUser({...e, role: "user"})
+      toast.success("Registration successful!!")
+      reset()
+      navigate("/")
     };
     return (
         <section>
       <div className="login-box">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="input-box">
-            <span className="icon">
-              <i className="fa-solid fa-user-tie"></i>
-            </span>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              {...register("name", { required: true })}
-            />
-            <label>Name</label>
-            {errors.name && (
-              <span style={{ color: "white" }}>This field is required</span>
-            )}
-          </div>
+        <form onSubmit={handleSubmit(registerSubmit)} >
           <div className="input-box">
             <span className="icon">
               <i className="fa-solid fa-envelope"></i>
@@ -87,12 +71,25 @@ const SignUp = () => {
             />
             <label>Password</label>
           </div>
+          <div className="input-box">
+            <span className="icon">
+              <i className="fa-solid fa-lock"></i>
+            </span>
+            <input
+              type="password"
+              name=""
+              id="pass"
+              {...register("confirmPassword", { required: true })}
+            />
+            <label>Confirm Password</label>
+          </div>
           <input
             className="submitBTN"
             type="submit"
             name="Sign Up"
             id=""
             value="Sign Up"
+            disabled={disabled}
           />
         </form>
       </div>
