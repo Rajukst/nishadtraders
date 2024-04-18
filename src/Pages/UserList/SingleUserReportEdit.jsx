@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import CSS for DatePicker
-import Swal from 'sweetalert2';
+
 
 
 const SingleUserReportEdit = () => {
