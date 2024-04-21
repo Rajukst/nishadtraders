@@ -11,12 +11,12 @@ const SingleUserReport = () => {
   const [singleUserReport, setSingleUserReport] = useState({});
   const navigate= useNavigate();
   useEffect(() => {
-    const url = `https://asadback.onrender.com/reportdata/${id}`;
+    const url = `https://nishadserver.vercel.app/reportdata/${id}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => setSingleUserReport(data));
   }, []);
-  const url = `https://asadback.onrender.com/detaCollection`;
+  const url = `https://nishadserver.vercel.app/detaCollection`;
   const { data: user = [], isLoading } = useQuery({
     queryKey: ["detaCollection"],
     queryFn: async () => {
@@ -25,7 +25,7 @@ const SingleUserReport = () => {
       return data;
     },
   });
-  const payurl = `https://asadback.onrender.com/paymentList`;
+  const payurl = `https://nishadserver.vercel.app/paymentList`;
   const { data: payments = [] } = useQuery({
     queryKey: ["paymentList"],
     queryFn: async () => {
@@ -86,7 +86,7 @@ const SingleUserReport = () => {
  
  
   const handleDelete = (id) => {
-    const url = `https://asadback.onrender.com/reporttabledata/${id}`;
+    const url = `https://nishadserver.vercel.app/reporttabledata/${id}`;
 
     Swal.fire({
         title: "Are you sure to Delete?",

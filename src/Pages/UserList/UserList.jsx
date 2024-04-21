@@ -13,7 +13,7 @@ const UserList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const pageSize = 10; // Number of items to display per page
 
-  const url = `https://asadback.onrender.com/detaCollection`;
+  const url = `https://nishadserver.vercel.app/detaCollection`;
   const { data: user = [], isLoading: userLoading } = useQuery({
     queryKey: ["detaCollection"],
     queryFn: async () => {
@@ -23,7 +23,7 @@ const UserList = () => {
     },
   });
 
-  const payurl = `https://asadback.onrender.com/paymentList`;
+  const payurl = `https://nishadserver.vercel.app/paymentList`;
   const { data: payments = [], isLoading: paymentsLoading } = useQuery({
     queryKey: ["paymentList"],
     queryFn: async () => {

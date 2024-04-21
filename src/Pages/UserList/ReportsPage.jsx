@@ -26,7 +26,7 @@ const ReportsPage = () => {
 
     useEffect(() => {
         // Fetch data from the API
-        fetch('https://asadback.onrender.com/paymentList')
+        fetch('https://nishadserver.vercel.app/paymentList')
             .then(response => response.json())
             .then(data => {
                 setShowReport(data);

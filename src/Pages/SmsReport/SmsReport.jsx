@@ -7,12 +7,12 @@ const SmsReport = () => {
     const {id}= useParams();
     const [singleReport, setSingleReport] = useState({});
     useEffect(() => {
-        const url = `https://asadback.onrender.com/reportdata/${id}`;
+        const url = `https://nishadserver.vercel.app/reportdata/${id}`;
         fetch(url)
           .then((res) => res.json())
           .then((data) => setSingleReport(data));
       }, []);
-      const url = `https://asadback.onrender.com/detaCollection`;
+      const url = `https://nishadserver.vercel.app/detaCollection`;
       const { data: user = [], isLoading } = useQuery({
         queryKey: ["detaCollection"],
         queryFn: async () => {
@@ -21,7 +21,7 @@ const SmsReport = () => {
           return data;
         },
       });
-      const payurl = `https://asadback.onrender.com/paymentList`;
+      const payurl = `https://nishadserver.vercel.app/paymentList`;
       const { data: payments = [] } = useQuery({
         queryKey: ["paymentList"],
         queryFn: async () => {

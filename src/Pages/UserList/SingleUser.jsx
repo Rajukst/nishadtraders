@@ -43,7 +43,7 @@ const SingleUser = () => {
   const [singleUser, setSingleUser] = useState({});
   console.log(singleUser);
   useEffect(() => {
-    const url = `https://asadback.onrender.com/detaCollection/${id}`;
+    const url = `https://nishadserver.vercel.app/detaCollection/${id}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
@@ -54,7 +54,7 @@ const SingleUser = () => {
         console.error("Error fetching data:", error);
       });
   }, [id]);
-  const url = `https://asadback.onrender.com/detaCollection`;
+  const url = `https://nishadserver.vercel.app/detaCollection`;
   const { data: user = [], isLoading } = useQuery({
     queryKey: ["detaCollection"],
     queryFn: async () => {
@@ -63,7 +63,7 @@ const SingleUser = () => {
       return data;
     },
   });
-  const payurl = `https://asadback.onrender.com/paymentList`;
+  const payurl = `https://nishadserver.vercel.app/paymentList`;
   const { data: payments = [] } = useQuery({
     queryKey: ["paymentList"],
     queryFn: async () => {
@@ -116,7 +116,7 @@ const SingleUser = () => {
       got,
     };
 
-    const response = await fetch("https://asadback.onrender.com/payment", {
+    const response = await fetch("https://nishadserver.vercel.app/payment", {
       method: "POST",
       headers: {
         "content-type": "application/json",

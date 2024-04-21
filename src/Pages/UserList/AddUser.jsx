@@ -24,7 +24,7 @@ const AddUser = () => {
     };
   
     // Post data to the grahokCollection collection
-    const grahokResponse = await fetch('https://asadback.onrender.com/users', {
+    const grahokResponse = await fetch('https://nishadserver.vercel.app/users', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -43,7 +43,7 @@ const AddUser = () => {
     };
   
     // Post data to the paymentList collection
-    const paymentListResponse = await fetch('https://asadback.onrender.com/paymentList', {
+    const paymentListResponse = await fetch('https://nishadserver.vercel.app/paymentList', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',

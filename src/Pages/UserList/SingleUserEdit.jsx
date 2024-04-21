@@ -7,7 +7,7 @@ const SingleUserEdit = () => {
   const [singleUserEdit, setSingleUserEdit] = useState({});
 const navigate= useNavigate()
   useEffect(() => {
-    const url = `https://asadback.onrender.com/editdata/${id}`;
+    const url = `https://nishadserver.vercel.app/editdata/${id}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => setSingleUserEdit(data));
@@ -27,7 +27,7 @@ const navigate= useNavigate()
   };
   const handleUpdateForm = (e) => {
     e.preventDefault();
-    const url = `https://asadback.onrender.com/editdata/${id}`;
+    const url = `https://nishadserver.vercel.app/editdata/${id}`;
     fetch(url, {
       method: "PUT",
       headers: {
