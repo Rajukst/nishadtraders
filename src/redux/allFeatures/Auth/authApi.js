@@ -12,6 +12,7 @@ const authApi= apiSlice.injectEndpoints({
             }),
             async onQueryStarted(data, {dispatch, queryFulfilled}){
                 try{
+                    console.log("Query started with data:", data);
                     const res= await queryFulfilled;
                     dispatch(setUser(data.email))
                 }catch{

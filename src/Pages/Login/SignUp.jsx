@@ -36,7 +36,7 @@ const SignUp = () => {
     }
     },[isError, error])
     const registerSubmit = (e) => {
-      console.log(e);
+      console.log("Form submitted with data:", e);
       dispatch(createUser({email:e.email, password:e.password}))
       postUser({...e, role: "user"})
       toast.success("Registration successful!!")
@@ -66,7 +66,7 @@ const SignUp = () => {
             <input
               type="password"
               name=""
-              id="pass"
+              id="pass1"
               {...register("password")}
             />
             <label>Password</label>
@@ -78,7 +78,7 @@ const SignUp = () => {
             <input
               type="password"
               name=""
-              id="pass"
+              id="pass2"
               {...register("confirmPassword", { required: true })}
             />
             <label>Confirm Password</label>
