@@ -18,7 +18,7 @@ const SingleUser = () => {
   const [giveInput, setGiveInput] = useState("");
   const [gotInput, setGotInput] = useState("");
   const [paydetailsInput, setPaydetailsInput] = useState("");
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
 
   // Function to handle checkbox toggle
   const handleToggle = () => {

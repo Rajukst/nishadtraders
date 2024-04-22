@@ -40,7 +40,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Login/>} />
         <Route path='/signup' element={<SignUp/>} />
-        <Route path='/reports' element={<ReportsPage/>} />
+        <Route path='/reports' element={<PrivateRoute><ReportsPage/></PrivateRoute>} />
         <Route path='users' element={<PrivateRoute><UserList/></PrivateRoute>} />
         <Route path='/add' element={<AddUser/>} />
         <Route path='/:id' element={<SingleUserReportEdit/>} />
