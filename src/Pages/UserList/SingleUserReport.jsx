@@ -136,6 +136,7 @@ const SingleUserReport = () => {
 const formatLocalDate = date => {
   return date.toLocaleDateString('en-US', { timeZone: 'UTC' });
 };
+console.log("user Payment:", userPayments)
   return (
     <>
       <Container>
@@ -191,32 +192,41 @@ const formatLocalDate = date => {
             </tr>
           </thead>
           <tbody>
-            {userPayments.map(
-              (payment) =>
-                // Only render the table row if the date is valid
-                payment.currentDate && (
-                  <tr key={payment._id} className="tableBodys">
-                    <td>{formatLocalDate(new Date(payment.currentDate))}</td> 
-                    {/* <td>{payment.currentDate}</td> */}
-                    <td>{payment.give}</td>
-                    <td>{payment.got}</td>
-                    <td>
-                      <div className="reportDataEdit">
-                        <Link to={`/${payment._id}`}><i className="fas fa-user-pen me-3"></i></Link>
-                        <i onClick={() => handleDelete(payment._id)} className="fas fa-trash"></i>
-                      </div>
-                    </td>
-                  </tr>
-                )
-            )}
-            <tr>
-              <td>
-                <p>PrevJer</p>
-                <p>{singleUserReport?.description}</p>
-                  </td>
-              <td colSpan="2">{prevJer}</td>
-            </tr>
-          </tbody>
+  {userPayments
+    .slice()
+    .sort((a, b) => new Date(b.currentDate) - new Date(a.currentDate))
+    .map((payment) =>
+      // Only render the table row if the date is valid
+      payment.currentDate &&    
+      console.log("prev jer date",payment)
+      (
+        <tr key={payment._id} className="tableBodys">
+          <td>{formatLocalDate(new Date(payment.currentDate))}</td>
+          <td>{payment.give}</td>
+          <td>{payment.got}</td>
+          <td>{formatLocalDate(new Date(payment.prevJerDate))}</td> {/* Display prevJerDate */}
+          
+          <td>
+            <div className="reportDataEdit">
+              <Link to={`/${payment._id}`}>
+                <i className="fas fa-user-pen me-3"></i>
+              </Link>
+              <i onClick={() => handleDelete(payment._id)} className="fas fa-trash"></i>
+            </div>
+          </td>
+        </tr>
+      )
+    )}
+  <tr>
+    <td>
+      <p>Previous Jer</p>
+      <p>{singleUserReport?.description}</p>
+    </td>
+    <td colSpan="2">{prevJer}</td>
+    {/* <td colSpan="2">{prevJerDate}</td> */}
+  </tr>
+</tbody>
+
           <tfoot className="sticky-footer">
             <tr>
               <td>Total</td>

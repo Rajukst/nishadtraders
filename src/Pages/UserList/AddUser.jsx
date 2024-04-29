@@ -40,6 +40,7 @@ const AddUser = () => {
       ...data,
       prevJer: Number(prevJer),
       usrId: usrId, // Include the userId
+      prevJerDate: currentDate,
     };
   
     // Post data to the paymentList collection

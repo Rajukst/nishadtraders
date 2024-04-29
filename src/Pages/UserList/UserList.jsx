@@ -7,14 +7,10 @@ import CustomLoader from "../../CustomLoader/CustomLoader";
 
 const UserList = () => {
   const [search, setSearch] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
   const [displayedData, setDisplayedData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const pageSize = 10; // Number of items to display per page
 
   const url = `https://asadback.onrender.com/detaCollection`;
-  const { data: user = [], isLoading: userLoading } = useQuery({
+  const { data: user = [], refetch, isLoading: userLoading } = useQuery({
     queryKey: ["detaCollection"],
     queryFn: async () => {
       const res = await fetch(url);
@@ -81,53 +77,6 @@ const UserList = () => {
   // Calculate the grand total by adding give, got, and prevJer
   const grandTotal = totalGive - totalGot + totalPrevJer;
 
-  // Calculate total number of pages
-  // useEffect(() => {
-  //   setTotalPages(Math.ceil(joinedData.length / pageSize));
-  // }, [joinedData]);
-  useEffect(() => {
-    const totalPages = Math.ceil(joinedData.length / pageSize);
-    setTotalPages(totalPages);
-}, [joinedData.length, pageSize]);
-  // Slice the data array to get the items for the current page
-  useEffect(() => {
-    const startIndex = (currentPage - 1) * pageSize;
-    const endIndex = currentPage * pageSize;
-    const newData = joinedData.slice(startIndex, endIndex);
-  
-    // Filter out items already displayed to avoid duplication
-    const filteredData = newData.filter(
-      (item) => !displayedData.some((displayedItem) => displayedItem._id === item._id)
-    );
-  
-    // Update displayedData with the new data
-    if (filteredData.length > 0) {
-      setDisplayedData((prevData) => [...prevData, ...filteredData]);
-    }
-  
-    setIsLoading(false);
-  }, [currentPage, joinedData, displayedData, pageSize]);
-  
-
-  // Handle scroll event
-  const handleScroll = useCallback(() => {
-    const scrollHeight = document.documentElement.scrollHeight;
-    const scrollTop = document.documentElement.scrollTop;
-    const clientHeight = document.documentElement.clientHeight;
-
-    if (
-      scrollTop + clientHeight >= scrollHeight &&
-      currentPage < totalPages
-    ) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  }, [currentPage, totalPages]);
-
-  // Add scroll event listener on component mount
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
 
   return (
     <>
@@ -166,12 +115,7 @@ const UserList = () => {
             </small>
           </div>
           <div className="userShow">
-            
-            {(userLoading || paymentsLoading) && <CustomLoader/> }
-            {displayedData.length === 0 && !isLoading && (
-              <p>No data to show</p>
-            )}
-            {displayedData
+            {joinedData
               .filter((item) => {
                 return search.toLowerCase() === ""
                   ? item
