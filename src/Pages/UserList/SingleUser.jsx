@@ -137,7 +137,7 @@ const SingleUser = () => {
   };
   const sendSMS = async () => {
     try {
-      const apiUrl = `https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/externalApiSendTextMessage.php?masking=Cloth%20BD&userName=clothbd&password=6e3ef0f41943adc9ee6e1bfdce47cf57&MsgType=TEXT&receiver=${singleUser?.mobile}&message= প্রিয় স্যার/ম্যাডাম,আপনার ৳${totalIncludingPrevJer} এর অর্থ মেসার্স নিসাদ টেলিকম (বারখাদা ত্রিমোহনী বাজার কুষ্টিয়া) এ মুলতুবি রয়েছে। বিশদ দেখতে এবং অর্থ প্রদানের জন্য এখানে ক্লিক করুন https://asadtelecom.vercel.app/${singleUser._id}/smsreport`;
+      const apiUrl = `http://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/externalApiSendTextMessage.php?masking=NishadTrad&userName=nishadt&password=646eec87c702311ba8eee6a7decf07af&MsgType=TEXT&receiver=${singleUser?.mobile}&message= প্রিয় স্যার/ম্যাডাম,আপনার ৳${totalIncludingPrevJer} এর অর্থ মেসার্স নিসাদ টেলিকম (বারখাদা ত্রিমোহনী বাজার কুষ্টিয়া) এ মুলতুবি রয়েছে। বিশদ দেখতে এবং অর্থ প্রদানের জন্য এখানে ক্লিক করুন https://asadtelecom.vercel.app/${singleUser._id}/smsreport`;
       const response = await fetch(apiUrl);
       if (response.ok) {
         toast.success("SMS sent successfully!");
@@ -150,7 +150,7 @@ const SingleUser = () => {
   };
 const sendInstantSMS= async(gotValue, totalIncludingPrevJer)=>{
   try {
-    const apiUrl = `https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/externalApiSendTextMessage.php?masking=Cloth%20BD&userName=clothbd&password=6e3ef0f41943adc9ee6e1bfdce47cf57&MsgType=TEXT&receiver=${singleUser?.mobile}&message= প্রিয় স্যার/ম্যাডাম,আপনার আজকের জমা ${gotValue} এবং অবশিষ্ট ${totalIncludingPrevJer-gotValue} অর্থ মেসার্স নিসাদ টেলিকম এ মুলতুবি রয়েছে।`;
+    const apiUrl = `http://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/externalApiSendTextMessage.php?masking=NishadTrad&userName=nishadt&password=646eec87c702311ba8eee6a7decf07af&MsgType=TEXT&receiver=${singleUser?.mobile}&message= প্রিয় স্যার/ম্যাডাম,আপনার আজকের জমা ${gotValue} এবং অবশিষ্ট ${totalIncludingPrevJer-gotValue} অর্থ মেসার্স নিসাদ টেলিকম এ মুলতুবি রয়েছে।`;
     const response = await fetch(apiUrl);
     if (response.ok) {
       toast.success("SMS sent successfully!");

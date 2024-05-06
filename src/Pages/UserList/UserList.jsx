@@ -10,7 +10,7 @@ const UserList = () => {
   const [displayedData, setDisplayedData] = useState([]);
 
   const url = `https://asadback.onrender.com/detaCollection`;
-  const { data: user = [], refetch, isLoading: userLoading } = useQuery({
+  const { data: user = [], refetch, isLoading } = useQuery({
     queryKey: ["detaCollection"],
     queryFn: async () => {
       const res = await fetch(url);
@@ -115,6 +115,7 @@ const UserList = () => {
             </small>
           </div>
           <div className="userShow">
+            {isLoading && <CustomLoader />}
             {joinedData
               .filter((item) => {
                 return search.toLowerCase() === ""
@@ -126,7 +127,6 @@ const UserList = () => {
                 const totalIncludingPrevJer =
                   parseInt(singleData.prevJer) + userTotals[singleData._id];
                 // console.log("Total Including prevJer:", totalIncludingPrevJer);
-
                 return (
                   <Link
                     key={singleData._id}

@@ -61,7 +61,7 @@ if(isError){
               <input type="checkbox" name="" id="hhhh" />
               Remember Me
             </label>
-            <Link to="#">Forgot Password</Link>
+            <Link to="/signup">SignUp</Link>
           </div>
           <input
             className="submitBTN"
