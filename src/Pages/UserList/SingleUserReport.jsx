@@ -133,8 +133,9 @@ const SingleUserReport = () => {
         }
     });
 };
-const formatLocalDate = date => {
-  return date.toLocaleDateString('en-US', { timeZone: 'UTC' });
+const formatLocalDate = (dateString) => {
+  const date = new Date(dateString);
+  return isNaN(date.getTime()) ? "Invalid Date" : date.toLocaleDateString('en-US', { timeZone: 'UTC' });
 };
 console.log("user Payment:", userPayments)
   return (
@@ -196,16 +197,11 @@ console.log("user Payment:", userPayments)
     .slice()
     .sort((a, b) => new Date(b.currentDate) - new Date(a.currentDate))
     .map((payment) =>
-      // Only render the table row if the date is valid
-      payment.currentDate &&    
-      console.log("prev jer date",payment)
-      (
+     (
         <tr key={payment._id} className="tableBodys">
-          <td>{formatLocalDate(new Date(payment.currentDate))}</td>
+          <td>{formatLocalDate(payment.currentDate)}</td>
           <td>{payment.give}</td>
           <td>{payment.got}</td>
-          <td>{formatLocalDate(new Date(payment.prevJerDate))}</td> {/* Display prevJerDate */}
-          
           <td>
             <div className="reportDataEdit">
               <Link to={`/${payment._id}`}>
